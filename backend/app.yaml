@@ -3,5 +3,6 @@ api_version: 1
 threadsafe: true
 
 handlers:
-- url: /.*
+- url: /rest/.*
   script: main.app
+# TODO add routers for angular app and shit

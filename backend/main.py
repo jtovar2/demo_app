@@ -16,12 +16,14 @@
 import logging
 
 from flask import Flask
+from flask_restful import Api
+from resources.org_api import OrganizationView
 
 
 app = Flask(__name__)
+api = Api(app)
 
-
-@app.route('/')
+@app.route('/rest/')
 def hello():
     return 'Hello World!'
 
@@ -32,3 +34,5 @@ def server_error(e):
     logging.exception('An error occurred during a request.')
     return 'An internal error occurred.', 500
 # [END app]
+
+api.add_resource(OrganizationView, '/rest/org/<string:id>', '/rest/org')
