@@ -29,12 +29,51 @@ class User(ndb.Model, Entity):
     works_for_organizations = ndb.KeyProperty(repeated=True)
     filled_forms = ndb.KeyProperty(repeated=True)
 
+    def add_fill_form(self, filled_form_key):
+        if self.filled_forms is None:
+            self.filled_forms = []
+        self.filled_forms.append(filled_form_key)
+        self.put()
+
+    def remove_fill_form(self, filled_form_key):
+        if self.filled_forms is None:
+            return
+        self.filled_forms.remove(filled_form_key)
+        self.put()
+    def add_organization(self, org_key):
+        if self.works_for_organizations is None:
+            self.works_for_organizations = []
+        self.works_for_organizations.append(org_key)
+        self.put()
+
+    def delete_organization(self, org_key):
+        if self.works_for_organizations is None:
+            return
+        self.works_for_organizations.remove(org_key)
+        self.put()
+
 class Organization(ndb.Model, Entity):
     user = ndb.UserProperty()
     email = ndb.StringProperty()
     workers = ndb.KeyProperty(repeated=True)
-    forms = ndb.KeyProperty(repeated=True)
     inventory = ndb.JsonProperty()
+
+    def add_worker_key(self, worker_key):
+        if self.workers is None:
+            self.workers = []
+        self.workers.append(worker_key)
+        self.put()
+
+    def remove_worker_key(self, workey_key_to_be_deleted):
+        if self.workers is None:
+            return
+        self.workers.remove(workey_key_to_be_deleted)
+        self.put()
+
+    def set_inventory(self, new_inventory):
+        self.inventory = new_inventory
+        self.put()
+
 
 class Form(ndb.Model, Entity):
     data = ndb.JsonProperty()
