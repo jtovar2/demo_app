@@ -1,0 +1,22 @@
+<h1>Inventory</h1>
+<hr>
+<p ng-show="forms.length == 0">No items in inventory.</p>
+<div class="container">
+    <div ng-repeat="item in inventory">
+        <div class="row">
+            <div class="span4"> <a editable-text="item.name"ng-click="editForm()">{{ item.name || "Enter Item name" }}</a></div>
+            <div class="span4"> <a editable-text="item.sku" ng-click="editForm()">{{ item.sku || "Enter Item SKU" }}</a></div>
+            <div class="span2"> <button class="btn btn-danger pull-right" type="button" ng-click="deleteItem(item.sku)"><i class="icon-trash icon-white"></i>Delete</button></div>
+
+        </div>
+        <br>
+    </div>
+
+    <form novalidate class="simple-form">
+    <div class="row">
+            <div class="span4"><label>Item Name: <input type="text" ng-model="new_item.name"></label></div>
+            <div class="span4"><label>Item Sku: <input type="text" ng-model="new_item.sku"></label></div>
+            <div class="span2"><input class="btn" type="submit" ng-click="addItem()" value="Add New Item"/></div>
+    </div>
+    </form>
+</div>

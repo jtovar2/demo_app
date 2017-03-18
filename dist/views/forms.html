@@ -1,0 +1,10 @@
+<h1>Forms</h1>
+<hr>
+<p ng-show="vm.forms.length == 0">No forms found.</p>
+<div class="container">
+    <div class="row" ng-repeat="form in vm.forms">
+        <div class="span3">{{form.name}}</div>
+        <div class="span2"> <button type="button" class="btn btn-default" ng-click="&quot;vm.editForm(form.id)">Edit</button></div>
+        <div class="span2"> <button class="btn btn-danger pull-right" type="button" ng-click="vm.deleteForm(field.field_id)"><i class="icon-trash icon-white"></i>Delete</button></div>
+    </div>
+</div>
