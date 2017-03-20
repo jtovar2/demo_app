@@ -18,15 +18,18 @@ import logging
 import json
 from flask import Flask
 from flask_restful import Api
+from flask_cors import CORS, cross_origin
 from resources.org_api import OrganizationApi
 from resources.form_api import FormApi
 from resources.filled_form_api import FilledFormApi
 from resources.user_api import UserApi
-from resources.form_relationships import FilledFormsByOrgApi, FormsByOrgApi
+from resources.form_relationships import FilledFormsByOrgApi, FormsByOrgApi, FilledFormByUserInOrgApi
 
 from google.appengine.api import users
+from google.appengine.ext import ndb
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 clientId = '692772929154-2nasht9k1q88nm15mekm0s6evt1pjin2.apps.googleusercontent.com'
@@ -38,7 +41,7 @@ def hello():
 
 
 
-@app.route('/rest/auth')
+@app.route('/rest/auth2')
 def auth_test():
     user = users.get_current_user()
     if user:
@@ -50,14 +53,24 @@ def auth_test():
         greeting = login_url
     return '{}'.format(greeting)
 
-@app.route('/rest/auth2')
+@app.route('/rest/auth')
 def auth():
     user = users.get_current_user()
     if user:
-        return json.dumps({'id': user.user_id()})
+        org_key = ndb.Key('Organization', user.user_id())
+        org = org_key.get()
+        if org is not None:
+            return json.dumps({'id': user.user_id(), 'account': 'organization'})
+        user_key = ndb.Key('User', user.user_id())
+        user_entity = user_key.get()
+        if user_entity is not None:
+            return json.dumps({'id': user.user_id(), 'account': 'user'})
+        else:
+            return json.dumps({'id': user.user_id(), 'account': 'none'})
+
 
     else:
-        return "Not logged in"
+        return json.dumps({'error': 'not signed in'})
 
 @app.errorhandler(500)
 def server_error(e):
@@ -72,4 +85,4 @@ api.add_resource(FilledFormApi, '/rest/filledform/<string:parent_id>/<string:id>
 api.add_resource(UserApi, '/rest/user/<string:id>', '/rest/user')
 api.add_resource(FilledFormsByOrgApi, '/rest/filledform/org/<string:id>')
 api.add_resource(FormsByOrgApi, '/rest/form/org/<string:id>')
-#api.add_resource(FilledFormByUserInOrgApi, '/rest/filledform/org/<string:id>/user/<string:user_id>')
+api.add_resource(FilledFormByUserInOrgApi, '/rest/filledform/org/<string:id>/user/<string:user_id>')

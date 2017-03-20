@@ -8,15 +8,15 @@ angularApp.controller('FormsCtrl', function ($scope) {
     $scope.forms = [
     {
         'id' : 10,
-        'name': 'formnicate'
+        'name': 'form1'
     },
     {
         'id' : 11,
-        'name': 'formnicate'
+        'name': 'form2'
     },
     {
         'id' : 12,
-        'name': 'formnicate'
+        'name': 'form3'
     }];;
 
     $scope.deleteForm = function(form_id)

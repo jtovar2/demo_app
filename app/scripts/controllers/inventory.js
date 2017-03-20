@@ -1,6 +1,6 @@
 'use strict';
 
-angularApp.controller('InventoryCtrl', function ($scope) {
+angularApp.controller('InventoryCtrl', function ($scope, OrganizationService, AuthService) {
 
     $scope.new_item = {};
     $scope.inventory = [
@@ -16,6 +16,10 @@ angularApp.controller('InventoryCtrl', function ($scope) {
         'sku' : 12347,
         'name' : 'nails'
     }]
+    AuthService.getCredentials().then(function(data)
+    {
+        console.log(data)
+    });
 
     $scope.deleteItem = function(item_sku)
     {

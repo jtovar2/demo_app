@@ -8,7 +8,6 @@ from google.appengine.api import users
 from google.appengine.ext import ndb
 from flask_restful import Resource
 
-"http://localhost:8080/_ah/login?email=asdfasd%40hotmail.com&action=Login"
 
 FORMS_PER_PAGE = 20
 
@@ -32,9 +31,10 @@ class FormsByOrgApi(Resource):
 
         return ndb_util.query_to_dict_list(Form.query_by_org(org_key).fetch(FORMS_PER_PAGE))
 
-'''class FilledFormByUserInOrgApi(Resource):
+class FilledFormByUserInOrgApi(Resource):
     def get(self, org_id, user_id):
         org_key = ndb.Key('Organization', org_id)
         user_key = ndb.Key('User', user_id)
-
-        return ndb_util.query_to_dict_list(query1.fetch(FORMS_PER_PAGE))'''
+        query = FilledForm.query_by_org(org_key)
+        query = query.filter(FilledForm.creator == user_key)
+        return ndb_util.query_to_dict_list(query.fetch(FORMS_PER_PAGE))

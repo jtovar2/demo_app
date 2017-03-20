@@ -23,6 +23,7 @@ class Entity(object):
         except Exception as e:
             return False
         return entity
+
 class User(ndb.Model, Entity):
     first_name = ndb.StringProperty()
     last_name = ndb.StringProperty()
@@ -91,7 +92,8 @@ class FilledForm(ndb.Model, Entity):
     @classmethod
     def query_by_org(cls, org_key):
         return cls.query(ancestor=org_key).order(-cls.created)
-class Attachment(ndb.model, Entity):
+
+class Blob(ndb.Model, Entity):
     blobstore_key = ndb.StringProperty()
     created = ndb.DateProperty(auto_now_add=True)
     creator = ndb.KeyProperty()
