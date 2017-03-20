@@ -24,18 +24,19 @@ class Entity(object):
             return False
         return entity
 class User(ndb.Model, Entity):
-    user = ndb.UserProperty()
+    first_name = ndb.StringProperty()
+    last_name = ndb.StringProperty()
     email = ndb.StringProperty()
     works_for_organizations = ndb.KeyProperty(repeated=True)
     filled_forms = ndb.KeyProperty(repeated=True)
 
-    def add_fill_form(self, filled_form_key):
+    def add_filled_form(self, filled_form_key):
         if self.filled_forms is None:
             self.filled_forms = []
         self.filled_forms.append(filled_form_key)
         self.put()
 
-    def remove_fill_form(self, filled_form_key):
+    def remove_filled_form(self, filled_form_key):
         if self.filled_forms is None:
             return
         self.filled_forms.remove(filled_form_key)
@@ -53,18 +54,18 @@ class User(ndb.Model, Entity):
         self.put()
 
 class Organization(ndb.Model, Entity):
-    user = ndb.UserProperty()
+    name = ndb.StringProperty()
     email = ndb.StringProperty()
     workers = ndb.KeyProperty(repeated=True)
     inventory = ndb.JsonProperty()
 
-    def add_worker_key(self, worker_key):
+    def add_worker(self, worker_key):
         if self.workers is None:
             self.workers = []
         self.workers.append(worker_key)
         self.put()
 
-    def remove_worker_key(self, workey_key_to_be_deleted):
+    def remove_worker(self, workey_key_to_be_deleted):
         if self.workers is None:
             return
         self.workers.remove(workey_key_to_be_deleted)
@@ -78,10 +79,15 @@ class Organization(ndb.Model, Entity):
 class Form(ndb.Model, Entity):
     data = ndb.JsonProperty()
 
+    @classmethod
+    def query_by_org(cls, org_key):
+        return cls.query(ancestor=org_key)
+
 class FilledForm(ndb.Model, Entity):
     data = ndb.JsonProperty()
     creator = ndb.KeyProperty()
     created = ndb.DateProperty(auto_now_add=True)
 
-
-
+    @classmethod
+    def query_by_org(cls, org_key):
+        return cls.query(ancestor=org_key).order(-cls.created)
