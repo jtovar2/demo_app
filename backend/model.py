@@ -91,3 +91,8 @@ class FilledForm(ndb.Model, Entity):
     @classmethod
     def query_by_org(cls, org_key):
         return cls.query(ancestor=org_key).order(-cls.created)
+class Attachment(ndb.model, Entity):
+    blobstore_key = ndb.StringProperty()
+    created = ndb.DateProperty(auto_now_add=True)
+    creator = ndb.KeyProperty()
+    photo_or_nah = ndb.BooleanProperty()
