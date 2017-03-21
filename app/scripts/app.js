@@ -1,7 +1,7 @@
 'use strict';
 
 var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$strap.directives',
-'xeditable', "dndLists", 'ui.router', 'ngRoute', ]);
+'xeditable', "dndLists", 'ui.router', 'ngRoute', 'toastr' ]);
 
 
 
@@ -19,8 +19,8 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
                 state: 'home',
                 config: {
                     url: '/',
-                    templateUrl: 'views/main.html',
-                    controller: 'MainController',
+                    templateUrl: '/views/main.html',
+                    controller: 'MainCtrl',
                     title: 'Home is where the heart is hahahaha'
                 }
             },
@@ -28,7 +28,7 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
                 state: 'form_creator',
                 config: {
                     url: '/forms/create',
-                    templateUrl: 'views/create.html',
+                    templateUrl: '/views/create.html',
                     controller: 'CreateCtrl',
                     title: 'Forms Creator'
                 }
@@ -36,8 +36,8 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
             {
                 state: 'forms',
                 config: {
-                    url: '/forms/create',
-                    templateUrl: 'views/forms.html',
+                    url: '/forms',
+                    templateUrl: '/views/forms.html',
                     controller: 'FormsCtrl',
                     title: 'Forms Creator'
                 }
@@ -46,7 +46,7 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
                 state: 'view_form',
                 config: {
                     url: '/forms/:id/view',
-                    templateUrl: 'views/view.html',
+                    templateUrl: '/views/view.html',
                     controller: 'ViewCtrl',
                     title: 'Form',
                     params: {
@@ -58,7 +58,7 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
                 state: 'inventory',
                 config: {
                     url: '/inventory',
-                    templateUrl: 'views/inventory.html',
+                    templateUrl: '/views/inventory.html',
                     controller: 'InventoryCtrl',
                     title: 'Inventory'
                 }
