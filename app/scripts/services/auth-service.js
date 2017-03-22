@@ -7,9 +7,16 @@
                 getCredentials: getCredentials
 
             };
-            var qa_prefix = 'http://localhost:8080'
-            var auth_api_path = qa_prefix + '/rest/auth'
+            var auth_api_path = '/rest/auth'
+
+            var client_role = 'error';
+            var client_id = 0;
             function success(data) {
+
+                if(!'error' in data)
+                {
+                    console.log(data.data);
+                }
                 return $q.resolve(data.data);
             }
 

@@ -6,6 +6,7 @@ var mountFolder = function (connect, dir) {
   return connect.static(require('path').resolve(dir));
 };
 
+var proxyMiddleware = require('http-proxy-middleware');
 // # Globbing
 // for performance reasons we're only matching one level down:
 // 'test/spec/{,*/}*.js'
@@ -46,11 +47,21 @@ module.exports = function (grunt) {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost'
+
       },
       livereload: {
         options: {
           middleware: function (connect) {
+
             return [
+              proxyMiddleware('/rest', {
+                target: "http://localhost:8080",
+                changeOrigin: true,
+              }),
+              proxyMiddleware('/_ah', {
+                target: "http://localhost:8080",
+                changeOrigin: true
+              }),
               lrSnippet,
               mountFolder(connect, '.tmp'),
               mountFolder(connect, yeomanConfig.app)
@@ -71,6 +82,7 @@ module.exports = function (grunt) {
       dist: {
         options: {
           middleware: function (connect) {
+
             return [
               mountFolder(connect, yeomanConfig.dist)
             ];

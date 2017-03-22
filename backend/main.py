@@ -29,7 +29,7 @@ from google.appengine.api import users
 from google.appengine.ext import ndb
 
 app = Flask(__name__)
-CORS(app)
+#CORS(app)
 api = Api(app)
 
 clientId = '692772929154-2nasht9k1q88nm15mekm0s6evt1pjin2.apps.googleusercontent.com'

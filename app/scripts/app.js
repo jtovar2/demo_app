@@ -21,6 +21,7 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
                     url: '/',
                     templateUrl: '/views/main.html',
                     controller: 'MainCtrl',
+                    controllerAs: 'vm',
                     title: 'Home is where the heart is hahahaha'
                 }
             },
