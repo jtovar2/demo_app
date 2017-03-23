@@ -21,6 +21,7 @@ class FilledFormsByOrgApi(Resource):
 
 class FormsByOrgApi(Resource):
     def get(self, id):
+        id = str(id)
         org_key = ndb.Key('Organization', id)
         client_id = users.get_current_user().user_id()
         if client_id != id:
@@ -28,8 +29,9 @@ class FormsByOrgApi(Resource):
             user = user_key.get()
             if user is None or org_key not in user.works_for_organizations:
                 abort(401)
-
-        return ndb_util.query_to_dict_list(Form.query_by_org(org_key).fetch(FORMS_PER_PAGE))
+        query = Form.query_by_org(org_key)
+        response = {'forms' : ndb_util.query_to_dict_list(query)}
+        return response
 
 class FilledFormByUserInOrgApi(Resource):
     def get(self, org_id, user_id):

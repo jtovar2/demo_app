@@ -18,12 +18,12 @@ import logging
 import json
 from flask import Flask
 from flask_restful import Api
-from flask_cors import CORS, cross_origin
 from resources.org_api import OrganizationApi
 from resources.form_api import FormApi
 from resources.filled_form_api import FilledFormApi
 from resources.user_api import UserApi
 from resources.form_relationships import FilledFormsByOrgApi, FormsByOrgApi, FilledFormByUserInOrgApi
+from resources.org_user_relationships import InviteUserToOrg
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -86,3 +86,4 @@ api.add_resource(UserApi, '/rest/user/<string:id>', '/rest/user')
 api.add_resource(FilledFormsByOrgApi, '/rest/filledform/org/<string:id>')
 api.add_resource(FormsByOrgApi, '/rest/form/org/<string:id>')
 api.add_resource(FilledFormByUserInOrgApi, '/rest/filledform/org/<string:id>/user/<string:user_id>')
+api.add_resource(InviteUserToOrg, '/rest/invite/<string:org_id>/<string:user_email>')

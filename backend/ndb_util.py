@@ -61,7 +61,6 @@ def entity_to_dict(entity, json_fields=None):
 
 def query_to_dict_list(query, json_fields=None):
     query_results = query.fetch()
-    print query_results
     print "##############"
     if json_fields != None:
         return list(map(functools.partial(entity_to_dict, json_fields=json_fields), query_results))

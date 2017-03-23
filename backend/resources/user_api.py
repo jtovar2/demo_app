@@ -43,6 +43,9 @@ class UserApi(Resource):
     def post(self):
         body = request.get_json(force=True)
         body['id'] = users.get_current_user().user_id()
+        user_key = ndb.Key('User', body['id'])
+        if user_key.get() != None:
+            abort(401)
         user = model.User()
         user = user.entity_from_dict(body)
         if user is False:
