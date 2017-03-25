@@ -1,11 +1,31 @@
-# App Engine Standard Flask Hello World
+# DemolisherApp
+For frontend stuff:
 
-This sample shows how to use [Flask](http://flask.pocoo.org/) with Google App
-Engine Standard.
+    npm install
 
-Before running or deploying this application, install the dependencies using
-[pip](http://pip.readthedocs.io/en/stable/):
+    bower install
+
+to run:
+
+    grunt server --force
+
+
+
+For backend stuff
+In order to run first install create virtual env.
+
+    cd backend
+
+    virtualenv virtual_env
+Then use the virtual env:
+
+    source virtual_env/bin/activate
+
+install the dependencies using
 
     pip install -t lib -r requirements.txt
+
+
+    dev_appserver.py .
 
 For more information, see the [App Engine Standard README](../../README.md)
