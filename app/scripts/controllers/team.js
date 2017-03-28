@@ -53,7 +53,10 @@ angularApp.controller('TeamCtrl', function ($scope, OrganizationService, AuthSer
         vm.new_item = {}
         vm.updateOrg();
     }
-
+    vm.intiteUser = funciton()
+    {
+        console.log("implelement this bullshit");
+    }
     vm.updateOrg = function()
     {
 
