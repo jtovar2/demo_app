@@ -31,7 +31,11 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
                     url: '/forms/create',
                     templateUrl: '/views/create.html',
                     controller: 'CreateCtrl',
-                    title: 'Forms Creator'
+                    title: 'Forms Creator',
+                    controllerAs: 'vm',
+                    params: {
+                        id: null
+                    }
                 }
             },
             {
@@ -40,6 +44,7 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
                     url: '/forms',
                     templateUrl: '/views/forms.html',
                     controller: 'FormsCtrl',
+                    controllerAs: 'vm',
                     title: 'Forms Creator'
                 }
             },
@@ -60,8 +65,19 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
                 config: {
                     url: '/inventory',
                     templateUrl: '/views/inventory.html',
+                    controllerAs: 'vm',
                     controller: 'InventoryCtrl',
                     title: 'Inventory'
+                }
+           },
+           {
+                state: 'sign_up',
+                config: {
+                    url: '/signup',
+                    templateUrl: '/views/signup.html',
+                    controllerAs: 'vm',
+                    controller: 'SingUpCtrl',
+                    title: 'Sign Up Today'
                 }
            }
         ];

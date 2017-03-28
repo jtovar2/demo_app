@@ -1,39 +1,49 @@
 'use strict';
 
-angularApp.controller('FormsCtrl', function ($scope) {
+angularApp.controller('FormsCtrl', function ($scope, FormService, AuthService) {
     //TODO create forms service that fetches forms
 
+    var vm = this;
+
+    vm.orgId = AuthService.getClientId();
 
 
-    $scope.forms = [
+    vm.updateUi = function() {
+    FormService.getFormsByOrg(vm.orgId).then(function(data)
     {
-        'id' : 10,
-        'name': 'form1'
-    },
+        console.log(data);
+        vm.forms = data.forms
+    });
+    }
+    if(vm.orgId != 0)
     {
-        'id' : 11,
-        'name': 'form2'
-    },
-    {
-        'id' : 12,
-        'name': 'form3'
-    }];;
+        vm.updateUi()
+    }
 
-    $scope.deleteForm = function(form_id)
+    $scope.$on('auth-update', function(event)
     {
-        for(var i = 0; i < $scope.forms.length; i++){
-            if($scope.forms[i].id == form_id){
-                $scope.forms.splice(i, 1);
-                break;
-            }
-        }
+        vm.orgId = AuthService.getClientId();
+        vm.clientRole = AuthService.getClientRole();
+        console.log(vm.orgId);
+        vm.updateUi();
+    });
+
+    vm.forms = [];
+
+    vm.deleteForm = function(form_id)
+    {
+        FormService.deleteForm(vm.orgId, form_id).then(function(data)
+        {
+            vm.updateUi();
+        });
     };
 
 
 
     ///TODO edit form func
-    $scope.editForm = function(form_id)
+    vm.editForm = function(form_id)
     {
         console.log(form_id);
+
     };
 });

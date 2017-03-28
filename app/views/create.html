@@ -6,23 +6,23 @@
 <!-- <div class="well">
     <div class="form-fields" ng-hide="previewMode">
         <div class="form-properties">
-            <h3 editable-text="form.form_name">{{ form.form_name || "Enter Form Name" }}</h3>
+            <h3 editable-text="vm.form.form_name">{{ vm.form.form_name || "Enter Form Name" }}</h3>
         </div>
 
         <hr>
 
         <h3>Fields</h3>
         <div class="add-field">
-            <select ng-model="addField.new" ng-options="type.name as type.value for type in addField.types"></select>
-            <button type="submit" class="btn" ng-click="addNewField()"><i class="icon-plus"></i> Add Field</button>
+            <select ng-model="vm.addField.new" ng-options="type.name as type.value for type in addField.types"></select>
+            <button type="submit" class="btn" ng-click="vm.addNewField()"><i class="icon-plus"></i> Add Field</button>
         </div>
         <hr>
-        <p ng-show="form.form_fields.length == 0">No fields added yet.</p>
+        <p ng-show="vm.form.form_fields.length == 0">No fields added yet.</p>
         <accordion close-others="accordion.oneAtATime">
-            <accordion-group heading="{{field.field_title}}" ng-repeat="field in form.form_fields">
+            <accordion-group heading="{{field.field_title}}" ng-repeat="vm.field in form.form_fields">
 
                 <div class="accordion-edit">
-                    <button class="btn btn-danger pull-right" type="button" ng-click="deleteField(field.field_id)"><i class="icon-trash icon-white"></i> Delete</button>
+                    <button class="btn btn-danger pull-right" type="button" ng-click="vm.deleteField(field.field_id)"><i class="icon-trash icon-white"></i> Delete</button>
 
                     <div class="row">
                         <div class="span2">Field Type:</div>
@@ -33,21 +33,21 @@
 
                     <div class="row">
                         <div class="span2">Field Title:</div>
-                        <div class="span4"><input type="text" ng-model="field.field_title" value="{{field.field_title}}"></div>
+                        <div class="span4"><input type="text" ng-model="vm.field.field_title" value="{{field.field_title}}"></div>
                     </div>
                     <div class="row">
                         <div class="span2">Field Default Value:</div>
-                        <div class="span4"><input type="text" ng-model="field.field_value" value="{{field.field_value}}"></div>
+                        <div class="span4"><input type="text" ng-model="vm.field.field_value" value="{{field.field_value}}"></div>
                     </div>
-                    <div class="row" ng-show="showAddOptions(field)">
+                    <div class="row" ng-show="vm.showAddOptions(field)">
                         <div class="span2">Field Options:</div>
                         <div class="span6">
-                            <div ng-repeat="option in field.field_options">
-                                <input type="text" ng-model="option.option_title" value="{{option.option_title}}">
-                                <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)"><i class="icon-minus icon-white"></i></a>
-                                <span class="label label-inverse">Value: {{ option.option_value }}</span>
+                            <div ng-repeat="vm.option in field.field_options">
+                                <input type="text" ng-model="vm.option.option_title" value="{{vm.ption.option_title}}">
+                                <a class="btn btn-danger btn-mini right" type="button" ng-click="vm.deleteOption(field, option)"><i class="icon-minus icon-white"></i></a>
+                                <span class="label label-inverse">Value: {{ vm.option.option_value }}</span>
                             </div>
-                            <button class="btn btn-primary btn-small" type="button" ng-click="addOption(field)"><i class="icon-plus icon-white"></i> Add Option</button>
+                            <button class="btn btn-primary btn-small" type="button" ng-click="vm.addOption(field)"><i class="icon-plus icon-white"></i> Add Option</button>
                         </div>
                     </div>
 
@@ -57,11 +57,11 @@
                         <div class="span2">Required:</div>
                         <div class="span4">
                             <label>
-                                <input type="radio" ng-value="true" ng-selected ng-model="field.field_required"/>
+                                <input type="radio" ng-value="true" ng-selected ng-model="vm.field.field_required"/>
                                 &nbsp; Yes
                             </label>
                             <label>
-                                <input type="radio" ng-value="false" ng-model="field.field_required"/>
+                                <input type="radio" ng-value="false" ng-model="vm.field.field_required"/>
                                 &nbsp; No
                             </label>
                         </div>
@@ -74,28 +74,28 @@
         </accordion>
 
         <p class="text-center">
-            <button class="btn btn-primary right" type="button" ng-click="previewOn()"><i class="icon-eye-open icon-white"></i> Preview Form</button>
-            <button class="btn btn-danger right" type="button" ng-click="reset()"><i class="icon-refresh icon-white"></i> Reset</button>
+            <button class="btn btn-primary right" type="button" ng-click="vm.previewOn()"><i class="icon-eye-open icon-white"></i> Preview Form</button>
+            <button class="btn btn-danger right" type="button" ng-click="vm.reset()"><i class="icon-refresh icon-white"></i> Reset</button>
         </p>
 
         <br><hr>
 
 		<div class="text-center">
-			<a class="btn btn-small btn-primary" ng-show="!showJson" ng-click="showJson = true">Show form json object</a>
-			<a class="btn btn-small btn-inverse" ng-show="showJson" ng-click="showJson = false">Hide form json object</a><br><br>
+			<a class="btn btn-small btn-primary" ng-show="vm.!showJson" ng-click="vm.showJson = true">Show form json object</a>
+			<a class="btn btn-small btn-inverse" ng-show="vm.showJson" ng-click="vm.showJson = false">Hide form json object</a><br><br>
 		</div>
 
-        <div ng-show="showJson">
+        <div ng-show="vm.showJson">
             <h4>Form object content:</h4>
-            <pre>{{ form | json }}</pre>
+            <pre>{{ vm.form | json }}</pre>
         </div>
     </div>
 
-    <div class="form-fields-preview" ng-show="previewMode">
+    <div class="form-fields-preview" ng-show="vm.previewMode">
         <form-directive form="previewForm"></form-directive>
 
         <p class="text-center">
-            <button class="btn btn-primary btn-large right" type="button" ng-click="previewOff()"><i class="icon-arrow-left icon-white"></i> Back to Create Mode</button>
+            <button class="btn btn-primary btn-large right" type="button" ng-click="vm.previewOff()"><i class="icon-arrow-left icon-white"></i> Back to Create Mode</button>
         </p>
     </div>
 </div>
@@ -105,27 +105,27 @@
      The dropped data will be added to the referenced list -->
 
 <div class="form-properties">
-            <h3 editable-text="form.form_name">{{ form.form_name || "Enter Form Name" }}</h3>
+            <h3 editable-text="vm.form.form_name">{{ vm.form.form_name || "Enter Form Name" }}</h3>
 </div>
-<p ng-show="form.form_fields.length == 0">No fields added yet.</p>
+<p ng-show="vm.form.form_fields.length == 0">No fields added yet.</p>
 <div class="formEditor">
-<ul dnd-list="form.form_fields">
+<ul dnd-list="vm.form.form_fields">
     <!-- The dnd-draggable directive makes an element draggable and will
          transfer the object that was assigned to it. If an element was
          dragged away, you have to remove it from the original list
          yourself using the dnd-moved attribute -->
 
 
-    <li ng-repeat="field in form.form_fields"
+    <li ng-repeat="field in vm.form.form_fields"
         dnd-draggable="field"
-        dnd-moved="form.form_fields.splice($index, 1)"
+        dnd-moved="vm.form.form_fields.splice($index, 1)"
         dnd-effect-allowed="move"
         >
 
             <div class="row">
                 <div class="span4"> <a editable-text="field.field_title">{{ field.field_title || "Enter Form Name" }}</a></div>
                 <div class="span2"> <button type="button" class="btn btn-default" ng-click="field.isCollapsed = !field.isCollapsed">Edit</button></div>
-                <div class="span2"> <button class="btn btn-danger pull-right" type="button" ng-click="deleteField(field.field_id)"><i class="icon-trash icon-white"></i>Delete</button></div>
+                <div class="span2"> <button class="btn btn-danger pull-right" type="button" ng-click="vm.deleteField(field.field_id)"><i class="icon-trash icon-white"></i>Delete</button></div>
             </div>
 
 
@@ -134,7 +134,7 @@
 		<div class="well well-lg">
             <div class="row">
                 <div class="span3">Field Type:</div>
-                <div class="span3"><select ng-model="field.field_type" ng-options="type.name as type.value for type in addField.types"></select></div>
+                <div class="span3"><select ng-model="field.field_type" ng-options="type.name as type.value for type in vm.addField.types"></select></div>
             </div>
              <div class="row">
                         <div class="span2">Required:</div>
@@ -149,15 +149,15 @@
                             </label>
                         </div>
                     </div>
-                    <div class="row" ng-show="showAddOptions(field)">
+                    <div class="row" ng-show="vm.showAddOptions(field)">
                         <div class="span2">Field Options:</div>
                         <div class="span6">
                             <div ng-repeat="option in field.field_options">
                                 <input type="text" ng-model="option.option_title" value="{{option.option_title}}">
-                                <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)"><i class="icon-minus icon-white"></i></a>
+                                <a class="btn btn-danger btn-mini right" type="button" ng-click="vm.deleteOption(field, option)"><i class="icon-minus icon-white"></i></a>
                                 <span class="label label-inverse">Value: {{ option.option_value }}</span>
                             </div>
-                            <button class="btn btn-primary btn-small" type="button" ng-click="addOption(field)"><i class="icon-plus icon-white"></i> Add Option</button>
+                            <button class="btn btn-primary btn-small" type="button" ng-click="vm.addOption(field)"><i class="icon-plus icon-white"></i> Add Option</button>
                         </div>
                     </div>
 
@@ -171,6 +171,8 @@
 </div>
 <hr>
 <div class="add-field">
-    <select ng-model="addField.new" ng-options="type.name as type.value for type in addField.types"></select>
-    <button type="submit" class="btn" ng-click="addNewField()"><i class="icon-plus"></i> Add Field</button>
+    <select ng-model="vm.addField.new" ng-options="type.name as type.value for type in vm.addField.types"></select>
+    <button type="submit" class="btn" ng-click="vm.addNewField()"><i class="icon-plus"></i> Add Field</button>
 </div>
+
+    <button ng-click="vm.saveForm()" class="btn">Save form</button>

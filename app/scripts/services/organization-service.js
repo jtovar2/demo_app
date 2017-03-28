@@ -12,7 +12,9 @@
             };
 
             var org_api_path = '/rest/org'
+            var invite_user_path = '/rest/invite'
             function success(data) {
+
                 return $q.resolve(data.data);
             }
 
@@ -29,6 +31,7 @@
               }
 
             function putOrg(org_id, org_details) {
+
                 return $http.put(org_api_path + '/' + org_id, org_details)
                     .then(success, error)
             }
@@ -40,6 +43,12 @@
 
             function postOrg(org_details) {
                 return $http.post(org_api_path, org_details)
+                    .then(success, error)
+            }
+
+            function inviteUser(org_id, user_email)
+            {
+                return $http.get(invite_user_path + '/' + org_id + '/' + user_email)
                     .then(success, error)
             }
             return services;

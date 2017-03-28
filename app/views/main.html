@@ -1,6 +1,11 @@
-    <div class="jumbotron">
-        <h1>Create an online form in seconds!</h1>
-        <p class="lead">angularjs-form-builder is an Online AngularJS Form Builder tool that lets you create online forms. Build interactive forms just in secs.</p>
-        <a class="btn btn-large btn-success" href="#/forms/create">Start Building!</a>
-    </div>
 
+    <div class="jumbotron">
+        <h1>Demolisher App</h1>
+        <p ng-if="vm.getClientRole == 'none'" class="lead">Create an account today!</p>
+        <button class="btn btn-large btn-success"  ui-sref="sign_up" ng-if="vm.getClientRole == 'none'">Sign up</button>
+
+        <p ng-if="vm.getClientRole == 'error'" class="lead">Create an account today</p>
+        <a class="btn btn-large btn-success"  ui-sref="sign_up" ng-if="vm.getClientRole == 'error'">Sign in</a>
+
+        <p>{{vm.getClientRole}} , {{vm.getClientId}}</p>
+    </div>

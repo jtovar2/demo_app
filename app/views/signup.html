@@ -1,0 +1,13 @@
+<form novalidate class="simple-form">
+    <label>Last Name: <input type="text" ng-model="vm.user.first_name" /></label><br />
+    <label>First Name: <input type="text" ng-model="vm.user.last_name" /></label><br />
+    <label>E-mail: <input type="email" ng-model="vm.user.email" /></label><br />
+    <button ng-click="vm.createUser()">Create User</button>
+</form>
+
+<form novalidate class="simple-form">
+    <label>Name: <input type="text" ng-model="vm.org.name" /></label><br />
+    <label>E-mail: <input type="email" ng-model="vm.org.email" /></label><br />
+    <button ng-click="vm.createOrg()">Create</button>
+
+</form>

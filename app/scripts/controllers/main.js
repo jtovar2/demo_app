@@ -1,12 +1,16 @@
 'use strict';
 
-angularApp.controller('MainCtrl', function ($scope, AuthService) {
-    console.log('wtff');
-    var vm = this;
-    var role = 'error';
+angularApp.controller('MainCtrl', function ($scope, $location, AuthService) {
 
-    AuthService.getCredentials().then(function(data)
+    var vm = this;
+    vm.getClientId = AuthService.getClientId();
+    vm.getClientRole = AuthService.getClientRole();
+
+
+    $scope.$on('auth-update', function(event)
     {
-        console.log(data);
-    })
+        vm.getClientId = AuthService.getClientId();
+        vm.getClientRole = AuthService.getClientRole();
+    });
+
 });

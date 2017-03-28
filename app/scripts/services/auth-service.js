@@ -1,10 +1,12 @@
 (function () {
     angularApp
     /* @ngInject */
-        .factory('AuthService', function ($q, $http) {
+        .factory('AuthService', function ($q, $http, $rootScope) {
             var services = {
                 // Get Calls
-                getCredentials: getCredentials
+                getCredentials: getCredentials,
+                getClientRole: getClientRole,
+                getClientId: getClientId
 
             };
             var auth_api_path = '/rest/auth'
@@ -13,10 +15,16 @@
             var client_id = 0;
             function success(data) {
 
-                if(!'error' in data)
+                console.log(data);
+                if('account' in data.data)
                 {
+
                     console.log(data.data);
+                    client_role = data.data.account;
+                    client_id = data.data.id;
+                    $rootScope.$broadcast('auth-update');
                 }
+
                 return $q.resolve(data.data);
             }
 
@@ -32,6 +40,13 @@
                     .then(success, error)
               }
 
+            function getClientRole() {
+                return client_role;
+            }
+
+            function getClientId() {
+                return client_id;
+            }
 
             return services;
 

@@ -1,47 +1,79 @@
 'use strict';
 
-angularApp.controller('InventoryCtrl', function ($scope, OrganizationService, AuthService) {
+angularApp.controller('InventoryCtrl', function ($scope, OrganizationService, AuthService, $watch) {
 
-    $scope.new_item = {};
-    $scope.inventory = [
+    var vm = this;
+
+    vm.clientId = AuthService.getClientId();
+
+    vm.org = {};
+
+    vm.updateUi = function() {
+    OrganizationService.getOrg(vm.clientId).then(function(data)
     {
-        'sku' : 12345,
-        'name' : 'hammer'
-    },
+        console.log(data);
+        vm.org = data;
+        console.log(vm.org.inventory)
+
+    });
+    }
+
+    if(vm.clientId != 0)
     {
-        'sku' : 123456,
-        'name' : 'hammer2'
-    },
+        vm.updateUi()
+    }
+
+    $scope.$on('auth-update', function(event)
     {
-        'sku' : 12347,
-        'name' : 'nails'
-    }]
-    AuthService.getCredentials().then(function(data)
-    {
-        console.log(data)
+        vm.clientId = AuthService.getClientId();
+        vm.clientRole = AuthService.getClientRole();
+        console.log(vm.clientId);
+        vm.updateUi();
     });
 
-    $scope.deleteItem = function(item_sku)
+
+
+    vm.new_item = {};
+
+    vm.deleteItem = function(item_sku)
     {
-        for(var i = 0; i < $scope.inventory.length; i++){
-            if($scope.inventory[i].sku == item_sku){
-                $scope.inventory.splice(i, 1);
+        for(var i = 0; i < vm.org.inventory.length; i++){
+            if(vm.org.inventory[i].sku == item_sku){
+                vm.org.inventory.splice(i, 1);
                 break;
             }
         }
+        vm.updateOrg();
     };
 
 
-    $scope.editInventory = function()
+    vm.addItem = function()
     {
-        console.log("yoy oyo whats up");
-        //TODO call service to update inventory
-    };
-
-
-    $scope.addItem = function()
-    {
-        $scope.inventory.push($scope.new_item)
-        $scope.new_item = {}
+        vm.org.inventory.push(vm.new_item)
+        vm.new_item = {}
+        vm.updateOrg();
     }
+
+    vm.updateOrg = function()
+    {
+        console.log("yoo yoy oy oy ");
+
+        OrganizationService.putOrg(vm.clientId, vm.org).then(function(data)
+        {
+            console.log(data);
+            vm.org = data;
+        })
+    }
+
+    $scope.updateInv = function ()
+    {
+        console.log("yoo yoy oy oy ");
+
+        OrganizationService.putOrg(vm.clientId, vm.org).then(function(data)
+        {
+            console.log(data);
+            vm.org = data;
+        })
+    }
+
 });

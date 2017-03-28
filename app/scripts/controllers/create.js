@@ -1,42 +1,55 @@
 'use strict';
 
-angularApp.controller('CreateCtrl', function ($scope, $dialog, FormService, editableOptions) {
+angularApp.controller('CreateCtrl', function ($scope, $dialog, $stateParams, FormService, AuthService, editableOptions) {
 
+    console.log($stateParams);
+    var vm = this;
+    vm.form_id = $stateParams.id;
     editableOptions.theme = 'bs2';
-    $scope.c = false;
+    vm.c = false;
     // preview form mode
-    $scope.previewMode = false;
+    vm.previewMode = false;
 
     // new form
-    $scope.form = {};
-    $scope.form.form_id = 1;
-    $scope.form.form_name = 'My Form';
-    $scope.form.form_fields = [];
+    vm.form = {};
+    vm.form.form_id = 1;
+    vm.form.form_name = 'My Form';
+    vm.form.form_fields = [];
+
+
+    if(vm.form_id != null)
+    {
+        FormService.getForm(AuthService.getClientId(), vm.form_id).then(function(data)
+        {
+            console.log(data);
+            vm.form = data.data;
+        })
+    }
 
     // previewForm - for preview purposes, form will be copied into this
     // otherwise, actual form might get manipulated in preview mode
-    $scope.previewForm = {};
+    vm.previewForm = {};
 
     // add new field drop-down:
-    $scope.addField = {};
-    $scope.addField.types = FormService.fields;
-    $scope.addField.new = $scope.addField.types[0].name;
-    $scope.addField.lastAddedID = 0;
+    vm.addField = {};
+    vm.addField.types = FormService.fields;
+    vm.addField.new = vm.addField.types[0].name;
+    vm.addField.lastAddedID = 0;
 
     // accordion settings
-    $scope.accordion = {}
-    $scope.accordion.oneAtATime = true;
+    vm.accordion = {}
+    vm.accordion.oneAtATime = true;
 
     // create new field button click
-    $scope.addNewField = function(){
+    vm.addNewField = function(){
 
         // incr field_id counter
-        $scope.addField.lastAddedID++;
+        vm.addField.lastAddedID++;
 
         var newField = {
-            "field_id" : $scope.addField.lastAddedID,
-            "field_title" : "New field - " + ($scope.addField.lastAddedID),
-            "field_type" : $scope.addField.new,
+            "field_id" : vm.addField.lastAddedID,
+            "field_title" : "New field - " + (vm.addField.lastAddedID),
+            "field_type" : vm.addField.new,
             "field_value" : "",
             "field_required" : true,
 			"field_disabled" : false,
@@ -44,21 +57,21 @@ angularApp.controller('CreateCtrl', function ($scope, $dialog, FormService, edit
         };
 
         // put newField into fields array
-        $scope.form.form_fields.push(newField);
+        vm.form.form_fields.push(newField);
     }
 
     // deletes particular field on button click
-    $scope.deleteField = function (field_id){
-        for(var i = 0; i < $scope.form.form_fields.length; i++){
-            if($scope.form.form_fields[i].field_id == field_id){
-                $scope.form.form_fields.splice(i, 1);
+    vm.deleteField = function (field_id){
+        for(var i = 0; i < vm.form.form_fields.length; i++){
+            if(vm.form.form_fields[i].field_id == field_id){
+                vm.form.form_fields.splice(i, 1);
                 break;
             }
         }
     }
 
     // add new option to the field
-    $scope.addOption = function (field){
+    vm.addOption = function (field){
         if(!field.field_options)
             field.field_options = new Array();
 
@@ -81,7 +94,7 @@ angularApp.controller('CreateCtrl', function ($scope, $dialog, FormService, edit
     }
 
     // delete particular option
-    $scope.deleteOption = function (field, option){
+    vm.deleteOption = function (field, option){
         for(var i = 0; i < field.field_options.length; i++){
             if(field.field_options[i].option_id == option.option_id){
                 field.field_options.splice(i, 1);
@@ -92,8 +105,8 @@ angularApp.controller('CreateCtrl', function ($scope, $dialog, FormService, edit
 
 
     // preview form
-    $scope.previewOn = function(){
-        if($scope.form.form_fields == null || $scope.form.form_fields.length == 0) {
+    vm.previewOn = function(){
+        if(vm.form.form_fields == null || vm.form.form_fields.length == 0) {
             var title = 'Error';
             var msg = 'No fields added yet, please add fields to the form before preview.';
             var btns = [{result:'ok', label: 'OK', cssClass: 'btn-primary'}];
@@ -101,20 +114,20 @@ angularApp.controller('CreateCtrl', function ($scope, $dialog, FormService, edit
             $dialog.messageBox(title, msg, btns).open();
         }
         else {
-            $scope.previewMode = !$scope.previewMode;
-            $scope.form.submitted = false;
-            angular.copy($scope.form, $scope.previewForm);
+            vm.previewMode = !vm.previewMode;
+            vm.form.submitted = false;
+            angular.copy(vm.form, vm.previewForm);
         }
     }
 
     // hide preview form, go back to create mode
-    $scope.previewOff = function(){
-        $scope.previewMode = !$scope.previewMode;
-        $scope.form.submitted = false;
+    vm.previewOff = function(){
+        vm.previewMode = !vm.previewMode;
+        vm.form.submitted = false;
     }
 
     // decides whether field options block will be shown (true for dropdown and radio fields)
-    $scope.showAddOptions = function (field){
+    vm.showAddOptions = function (field){
         if(field.field_type == "radio" || field.field_type == "dropdown")
             return true;
         else
@@ -122,8 +135,28 @@ angularApp.controller('CreateCtrl', function ($scope, $dialog, FormService, edit
     }
 
     // deletes all the fields
-    $scope.reset = function (){
-        $scope.form.form_fields.splice(0, $scope.form.form_fields.length);
-        $scope.addField.lastAddedID = 0;
+    vm.reset = function (){
+        vm.form.form_fields.splice(0, vm.form.form_fields.length);
+        vm.addField.lastAddedID = 0;
+    }
+
+    vm.saveForm = function()
+    {
+        if(vm.form_id == null)
+        {
+            FormService.postForm(AuthService.getClientId(), {data: vm.form}).then(function(data)
+            {
+                console.log(data);
+            })
+
+        }
+        else
+        {
+            FormService.putForm(AuthService.getClientId(), vm.form_id, {data: vm.form}).then(function(data)
+            {
+                console.log(data);
+            })
+
+        }
     }
 });
