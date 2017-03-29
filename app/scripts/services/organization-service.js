@@ -7,7 +7,8 @@
                 putOrg: putOrg,
                 getOrg: getOrg,
                 deleteOrg: deleteOrg,
-                postOrg: postOrg
+                postOrg: postOrg,
+                inviteUser: inviteUser
 
             };
 

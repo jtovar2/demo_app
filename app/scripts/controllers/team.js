@@ -1,4 +1,4 @@
-use strict';
+'use strict';
 
 angularApp.controller('TeamCtrl', function ($scope, OrganizationService, AuthService) {
 
@@ -53,9 +53,13 @@ angularApp.controller('TeamCtrl', function ($scope, OrganizationService, AuthSer
         vm.new_item = {}
         vm.updateOrg();
     }
-    vm.intiteUser = funciton()
+    vm.inviteUser = function()
     {
-        console.log("implelement this bullshit");
+        OrganizationService.inviteUser(vm.clientId, vm.email).then(function(data)
+        {
+            console.log(data);
+        })
+
     }
     vm.updateOrg = function()
     {

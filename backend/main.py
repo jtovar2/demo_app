@@ -29,6 +29,7 @@ from google.appengine.api import users
 from google.appengine.ext import ndb
 
 app = Flask(__name__)
+app.debug = True
 #CORS(app)
 api = Api(app)
 
