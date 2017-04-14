@@ -23,7 +23,7 @@ from resources.form_api import FormApi
 from resources.filled_form_api import FilledFormApi
 from resources.user_api import UserApi
 from resources.form_relationships import FilledFormsByOrgApi, FormsByOrgApi, FilledFormByUserInOrgApi
-from resources.org_user_relationships import InviteUserToOrg
+from resources.org_user_relationships import InviteUserToOrg, AddUserToOrg, GetAllWorkersForOrg
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -61,17 +61,19 @@ def auth():
         org_key = ndb.Key('Organization', user.user_id())
         org = org_key.get()
         if org is not None:
-            return json.dumps({'id': user.user_id(), 'account': 'organization'})
+            return json.dumps({'id': user.user_id(), 'account': 'organization', 'email': user.email()})
         user_key = ndb.Key('User', user.user_id())
         user_entity = user_key.get()
         if user_entity is not None:
-            return json.dumps({'id': user.user_id(), 'account': 'user'})
+            return json.dumps({'id': user.user_id(), 'account': 'user', 'email': user.email()})
         else:
-            return json.dumps({'id': user.user_id(), 'account': 'none'})
+            return json.dumps({'id': user.user_id(), 'account': 'none', 'email': user.email()})
 
 
     else:
-        return json.dumps({'error': 'not signed in'})
+        login_url = users.create_login_url('/signup')
+        print login_url
+        return json.dumps({'error': 'not signed in', 'login_url': login_url}), 401
 
 @app.errorhandler(500)
 def server_error(e):
@@ -88,3 +90,5 @@ api.add_resource(FilledFormsByOrgApi, '/rest/filledform/org/<string:id>')
 api.add_resource(FormsByOrgApi, '/rest/form/org/<string:id>')
 api.add_resource(FilledFormByUserInOrgApi, '/rest/filledform/org/<string:id>/user/<string:user_id>')
 api.add_resource(InviteUserToOrg, '/rest/invite/<string:org_id>/<string:user_email>')
+api.add_resource(AddUserToOrg, '/rest/org/add/worker/<string:org_id>/<string:user_id>')
+api.add_resource(GetAllWorkersForOrg, '/rest/org/workers/<string:org_id>')

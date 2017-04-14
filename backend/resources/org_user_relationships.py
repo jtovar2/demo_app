@@ -49,15 +49,48 @@ class InviteUserToOrg(Resource):
         query = query.filter(User.email == user_email)
         query_results = query.fetch()
         if len(query_results) == 0:
-            add_new_user_path = base_url + 'signup?referal=' + org_id
-            body = body + new_user_message.format(path=add_new_user_path)
+            add_new_user_path = base_url + 'signup?referral=' + org_id
+            print add_new_user_path
+            body = body + new_user_message.format(path=add_new_user_path, app_name=app_name)
         else:
             user = query_results[0]
             user_id = query_results[0].key.id()
-            add_user_path = 'http://locahost:9000'  + '/rest/org/add_user/' + org_id + '/' + user_id
+            add_user_path = base_url  + 'rest/org/add_user/' + org_id + '/' + user_id
+            print add_user_path
             body = body + user_message.format(path=add_user_path)
 
         response = mail.send_mail(sender=sender, to=user_email, subject=subject, body="", html=body)
 
 
         return response
+
+
+class AddUserToOrg(Resource):
+    def get(self, org_id, user_id):
+        client_id = users.get_current_user().user_id()
+        if client_id != user_id:
+            abort(401)
+        org_key = ndb.Key('Organization', org_id)
+        org = org_key.get()
+        user_key = ndb.Key('User', user_id)
+        user = user_key.get()
+
+        user.add_organization(org_key)
+        org.add_worker(user_key)
+
+        return user.to_json()
+
+class GetAllWorkersForOrg(Resource):
+    def get(self, org_id):
+        client_id = users.get_current_user().user_id()
+        if client_id != org_id:
+            abort(401)
+        org_key = ndb.Key('Organization', org_id)
+        org = org_key.get()
+        workers_entities = ndb.get_multi(org.workers)
+        workers_json = []
+        for entity in workers_entities:
+            workers_json.append(entity.to_json())
+        return {"workers" : workers_json}
+
+

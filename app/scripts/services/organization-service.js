@@ -8,12 +8,16 @@
                 getOrg: getOrg,
                 deleteOrg: deleteOrg,
                 postOrg: postOrg,
-                inviteUser: inviteUser
+                inviteUser: inviteUser,
+                addUser : addUser,
+                getWorkers : getWorkers
 
             };
 
             var org_api_path = '/rest/org'
             var invite_user_path = '/rest/invite'
+            var add_user_path = '/rest/org/add/worker'
+            var get_workers_path = '/rest/org/workers'
             function success(data) {
 
                 return $q.resolve(data.data);
@@ -50,6 +54,18 @@
             function inviteUser(org_id, user_email)
             {
                 return $http.get(invite_user_path + '/' + org_id + '/' + user_email)
+                    .then(success, error)
+            }
+
+            function addUser(org_id, user_id)
+            {
+                return $http.get(add_user_path + '/' + org_id + '/' + user_id)
+                    .then(success, error)
+            }
+
+            function getWorkers(org_id)
+            {
+                return $http.get(get_workers_path + '/' + org_id)
                     .then(success, error)
             }
             return services;

@@ -4,17 +4,23 @@ angularApp.controller('TeamCtrl', function ($scope, OrganizationService, AuthSer
 
     var vm = this;
 
-    vm.clientId = AuthService.getClientId();
-
     vm.org = {};
+
+    vm.workers = [];
 
     vm.updateUi = function() {
     OrganizationService.getOrg(vm.clientId).then(function(data)
     {
         console.log(data);
         vm.org = data;
-        console.log(vm.org.inventory)
+        console.log(vm.org)
 
+    });
+
+    OrganizationService.getWorkers(vm.clientId).then(function(data)
+    {
+        console.log(data);
+        vm.workers = data.workers;
     });
     }
 
@@ -35,24 +41,19 @@ angularApp.controller('TeamCtrl', function ($scope, OrganizationService, AuthSer
 
     vm.new_item = {};
 
-    vm.removeWorker = function(item_sku)
+    vm.removeWorker = function(worker_id)
     {
-        for(var i = 0; i < vm.org.workers.length; i++){
-            if(vm.org.inventory[i].key == item_sku){
-                vm.org.inventory.splice(i, 1);
+        for(var i = 0; i < vm.org.workers.length; i++)
+        {
+            if(vm.org.workers[i] == worker_id)
+            {
+                vm.org.workers.splice(i, 1);
                 break;
             }
         }
         vm.updateOrg();
     };
 
-
-    vm.addWorker = function()
-    {
-        vm.org.inventory.push(vm.new_item)
-        vm.new_item = {}
-        vm.updateOrg();
-    }
     vm.inviteUser = function()
     {
         OrganizationService.inviteUser(vm.clientId, vm.email).then(function(data)
@@ -68,6 +69,7 @@ angularApp.controller('TeamCtrl', function ($scope, OrganizationService, AuthSer
         {
             console.log(data);
             vm.org = data;
-        })
+        });
+        vm.updateUi();
     }
 });

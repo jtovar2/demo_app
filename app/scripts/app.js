@@ -28,7 +28,7 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
             {
                 state: 'form_creator',
                 config: {
-                    url: '/forms/create',
+                    url: '/forms/create/:id',
                     templateUrl: '/views/create.html',
                     controller: 'CreateCtrl',
                     title: 'Forms Creator',
@@ -73,11 +73,14 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
            {
                 state: 'sign_up',
                 config: {
-                    url: '/signup',
+                    url: '/signup?referral',
                     templateUrl: '/views/signup.html',
                     controllerAs: 'vm',
                     controller: 'SingUpCtrl',
-                    title: 'Sign Up Today'
+                    title: 'Sign Up Today',
+                    params: {
+                        referral: null
+                    }
                 }
            },
            {
