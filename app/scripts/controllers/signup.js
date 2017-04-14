@@ -1,6 +1,6 @@
 'use strict';
 
-angularApp.controller('SingUpCtrl', function ($scope, UserService, OrganizationService, AuthService, $stateParams) {
+angularApp.controller('SingUpCtrl', function ($scope, UserService, OrganizationService, AuthService, $stateParams, $state) {
     var vm = this;
     AuthService.getCredentials()
 
@@ -33,6 +33,8 @@ angularApp.controller('SingUpCtrl', function ($scope, UserService, OrganizationS
                 })
             }
 
+            $state.go('home');
+
         }
         )
     }
@@ -45,5 +47,6 @@ angularApp.controller('SingUpCtrl', function ($scope, UserService, OrganizationS
         {
             console.log(data);
         });
+        $state.go('home');
     }
 });

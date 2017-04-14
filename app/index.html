@@ -25,8 +25,9 @@
                     <li><a ui-sref="home">Home</a></li>
                     <li><a ng-show="vm.getClientRole == vm.org_role" ui-sref="forms">Forms</a></li>
                     <li><a ng-show="vm.getClientRole == vm.org_role" ui-sref="inventory">Inventory</a></li>
-                    <li><a ui-sref="sign_up">Create a Form</a></li>
-                    <li><a ui-sref="view_form({id: 12})">View Example Form</a></li>
+                    <li><a ng-show="vm.getClientRole == vm.org_role" ui-sref="team">Team</a></li>
+                    <li><a ng-show='vm.getClientRole == vm.none_role' ui-sref="sign_up">Create a Form</a></li>
+                    <!--<li><a ui-sref="view_form({id: 12})">View Example Form</a></li>-->
                 </ul>
                 <h3 class="muted">Demolisher App</h3>
             </div>
