@@ -23,7 +23,7 @@ from resources.form_api import FormApi
 from resources.filled_form_api import FilledFormApi
 from resources.user_api import UserApi
 from resources.form_relationships import FilledFormsByOrgApi, FormsByOrgApi, FilledFormByUserInOrgApi
-from resources.org_user_relationships import InviteUserToOrg, AddUserToOrg, GetAllWorkersForOrg
+from resources.org_user_relationships import InviteUserToOrg, AddUserToOrg, GetAllWorkersForOrg, RemoveUserFromOrg
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -92,3 +92,4 @@ api.add_resource(FilledFormByUserInOrgApi, '/rest/filledform/org/<string:id>/use
 api.add_resource(InviteUserToOrg, '/rest/invite/<string:org_id>/<string:user_email>')
 api.add_resource(AddUserToOrg, '/rest/org/add/worker/<string:org_id>/<string:user_id>')
 api.add_resource(GetAllWorkersForOrg, '/rest/org/workers/<string:org_id>')
+api.add_resource(RemoveUserFromOrg, '/rest/org/remove/worker/<string:org_id>/<string:user_id>')

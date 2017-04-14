@@ -10,13 +10,23 @@ angularApp.controller('SingUpCtrl', function ($scope, UserService, OrganizationS
     vm.org = {'inventory': [], 'email': AuthService.getClientEmail()};
     var client_id = AuthService.getClientId();
 
+    vm.clientRole = AuthService.getClientRole();
+    vm.org_role = 'organization';
+    vm.none_role = 'none';
+    vm.user_role = 'user';
 
     $scope.$on('auth-update', function(event)
     {
         vm.user.email = AuthService.getClientEmail();
         vm.org.email = AuthService.getClientEmail();
         client_id = AuthService.getClientId();
+        vm.clientRole = AuthService.getClientRole();
         console.log("update");
+
+        if(vm.user_role == vm.clientRole)
+        {
+            vm.addReferral();
+        }
     });
 
     vm.createUser = function()
@@ -25,15 +35,7 @@ angularApp.controller('SingUpCtrl', function ($scope, UserService, OrganizationS
         {
             console.log(data);
             console.log(referral_id);
-            if(referral_id != '' && referral_id != null)
-            {
-                OrganizationService.addUser(referral_id, client_id).then(function(data)
-                {
-                    console.log(data);
-                })
-            }
-
-            $state.go('home');
+            vm.addReferral();
 
         }
         )
@@ -47,6 +49,19 @@ angularApp.controller('SingUpCtrl', function ($scope, UserService, OrganizationS
         {
             console.log(data);
         });
+        $state.go('home');
+    }
+
+    vm.addReferral = function()
+    {
+        if(referral_id != '' && referral_id != null)
+        {
+            OrganizationService.addUser(referral_id, client_id).then(function(data)
+             {
+                console.log(data);
+             });
+        }
+
         $state.go('home');
     }
 });

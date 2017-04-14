@@ -4,11 +4,15 @@ angularApp.controller('TeamCtrl', function ($scope, OrganizationService, AuthSer
 
     var vm = this;
 
+    vm.clientId = AuthService.getClientId();
+    console.log(vm.clientId + "on teamctrl");
+
     vm.org = {};
 
     vm.workers = [];
 
     vm.updateUi = function() {
+    console.log('updating ui');
     OrganizationService.getOrg(vm.clientId).then(function(data)
     {
         console.log(data);
@@ -33,7 +37,7 @@ angularApp.controller('TeamCtrl', function ($scope, OrganizationService, AuthSer
     {
         vm.clientId = AuthService.getClientId();
         vm.clientRole = AuthService.getClientRole();
-        console.log(vm.clientId);
+        console.log(vm.clientId + "on broadcast");
         vm.updateUi();
     });
 
@@ -45,13 +49,17 @@ angularApp.controller('TeamCtrl', function ($scope, OrganizationService, AuthSer
     {
         for(var i = 0; i < vm.org.workers.length; i++)
         {
-            if(vm.org.workers[i] == worker_id)
+            if(vm.org.workers[i].key == worker_id)
             {
                 vm.org.workers.splice(i, 1);
                 break;
             }
         }
-        vm.updateOrg();
+        OrganizationService.removeUser(vm.clientId, worker_id).then(function(data)
+        {
+                vm.updateUi();
+        });
+
     };
 
     vm.inviteUser = function()

@@ -6,6 +6,7 @@ angularApp.controller('HeaderCtrl', function ($scope, $location, $window, AuthSe
         var vm = this;
         vm.org_role = 'organization';
         vm.none_role = 'none';
+        vm.user_role = 'user';
 
         vm.getClientId = AuthService.getClientId();
         vm.getClientRole = AuthService.getClientRole();

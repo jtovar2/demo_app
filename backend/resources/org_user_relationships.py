@@ -55,7 +55,7 @@ class InviteUserToOrg(Resource):
         else:
             user = query_results[0]
             user_id = query_results[0].key.id()
-            add_user_path = base_url  + 'rest/org/add_user/' + org_id + '/' + user_id
+            add_user_path = base_url + 'signup?referral=' + org_id
             print add_user_path
             body = body + user_message.format(path=add_user_path)
 
@@ -74,11 +74,27 @@ class AddUserToOrg(Resource):
         org = org_key.get()
         user_key = ndb.Key('User', user_id)
         user = user_key.get()
-
+        if user_key in org.workers or org_key in user.works_for_organizations:
+            abort(403)
         user.add_organization(org_key)
         org.add_worker(user_key)
 
         return user.to_json()
+
+
+class RemoveUserFromOrg(Resource):
+    def delete(self, org_id, user_id):
+        client_id = users.get_current_user().user_id()
+        if client_id != org_id:
+            abort(401)
+        org_key = ndb.Key('Organization', org_id)
+        org = org_key.get()
+        user_key = ndb.Key('User', user_id)
+        user = user_key.get()
+
+        user.delete_organization(org_key)
+        org.remove_worker(user_key)
+        return 'OK'
 
 class GetAllWorkersForOrg(Resource):
     def get(self, org_id):

@@ -5,6 +5,7 @@ angularApp.controller('MainCtrl', function ($scope, $location, AuthService) {
     var vm = this;
     vm.getClientId = AuthService.getClientId();
     vm.getClientRole = AuthService.getClientRole();
+    vm.email = AuthService.getClientEmail();
 
     vm.loginUrl = '';
 
@@ -14,6 +15,7 @@ angularApp.controller('MainCtrl', function ($scope, $location, AuthService) {
     {
         vm.getClientId = AuthService.getClientId();
         vm.getClientRole = AuthService.getClientRole();
+        vm.email = AuthService.getClientEmail();
     });
 
 
