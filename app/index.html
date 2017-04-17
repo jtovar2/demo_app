@@ -26,6 +26,7 @@
                     <li><a ng-show="vm.getClientRole == vm.org_role" ui-sref="forms">Forms</a></li>
                     <li><a ng-show="vm.getClientRole == vm.org_role" ui-sref="inventory">Inventory</a></li>
                     <li><a ng-show="vm.getClientRole == vm.org_role" ui-sref="team">Team</a></li>
+                    <li><a ng-show="vm.getClientRole == vm.org_role" ui-sref="places">Places</a></li>
                     <li><a ng-show='vm.getClientRole == vm.none_role' ui-sref="sign_up">Create a Form</a></li>
                     <!--<li><a ui-sref="view_form({id: 12})">View Example Form</a></li>-->
                 </ul>
@@ -72,6 +73,7 @@
         <script src="scripts/controllers/view.js"></script>
         <script src="scripts/controllers/header.js"></script>
         <script src="scripts/controllers/forms.js"></script>
+        <script src="scripts/controllers/places.js"></script>
         <script src="scripts/controllers/inventory.js"></script>
         <script src="scripts/controllers/signup.js"></script>
         <script src="scripts/controllers/team.js"></script>
@@ -83,6 +85,7 @@
         <script src="scripts/services/organization-service.js"></script>
         <script src="scripts/services/user-service.js"></script>
         <script src="scripts/services/auth-service.js"></script>
+        <script src="scripts/services/place-service.js"></script>
         <script src="scripts/directives/form-directive.js"></script>
         <script src="scripts/directives/field-directive.js"></script>
         <script src="lib/ui-bootstrap-tpls-0.4.0.min.js"></script>

@@ -84,6 +84,14 @@ class Form(ndb.Model, Entity):
     def query_by_org(cls, org_key):
         return cls.query(ancestor=org_key)
 
+class Place(ndb.Model, Entity):
+    address = ndb.JsonProperty()
+
+    @classmethod
+    def query_by_org(cls, org_key):
+        return cls.query(ancestor=org_key)
+
+
 class FilledForm(ndb.Model, Entity):
     data = ndb.JsonProperty()
     creator = ndb.KeyProperty()

@@ -92,6 +92,16 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
                     controller: 'TeamCtrl',
                     title: 'Team'
                 }
+           },
+           {
+                state: 'places',
+                config: {
+                    url: '/places',
+                    templateUrl: '/views/places.html',
+                    controllerAs: 'vm',
+                    controller: 'PlacesCtrl',
+                    title: 'Places'
+                }
            }
         ];
     }

@@ -7,11 +7,13 @@
                 putUser: putUser,
                 getUser: getUser,
                 deleteUser: deleteUser,
-                postUser: postUser
+                postUser: postUser,
+                getOrgsUserWorksFor : getOrgsUserWorksFor
 
             };
 
-            var user_api_path = '/rest/user'
+            var user_api_path = '/rest/user';
+            var user_works_for_path = '/rest/user/orgs';
             function success(data) {
                 return $q.resolve(data.data);
             }
@@ -40,6 +42,12 @@
 
             function postUser(user_details) {
                 return $http.post(user_api_path, user_details)
+                    .then(success, error)
+            }
+
+            function getOrgsUserWorksFor(user_id)
+            {
+                return $http.get(user_works_for_path + '/' + user_id)
                     .then(success, error)
             }
             return services;

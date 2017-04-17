@@ -1,7 +1,7 @@
 'use strict';
 
 angularApp.controller('FormsCtrl', function ($scope, FormService, AuthService) {
-    //TODO create forms service that fetches forms
+
 
     var vm = this;
 

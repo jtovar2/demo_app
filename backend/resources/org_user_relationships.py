@@ -109,4 +109,17 @@ class GetAllWorkersForOrg(Resource):
             workers_json.append(entity.to_json())
         return {"workers" : workers_json}
 
+class GetAllOrgsForWorker(Resource):
+    def get(self, user_id):
+        client_id = users.get_current_user().user_id()
+        if client_id != user_id:
+            abort(401)
+        user_key = ndb.Key('User', user_id)
+        user = user_key.get()
+        orgs_entities = ndb.get_multi(user.works_for_organizations)
+        orgs_json = []
+        for entity in orgs_entities:
+            orgs_json.append(entity.to_json())
+        return {'organizations': orgs_json}
+
 

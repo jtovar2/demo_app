@@ -8,4 +8,19 @@
         <a class="btn btn-large btn-success"   ng-if="vm.getClientRole == 'error'">Sign in</a>
 
         <p>{{vm.getClientRole}} , {{vm.getClientId}}, {{vm.email}}</p>
+
+
+        <div ng-if="vm.getClientRole == 'user'">
+            <div class="btn-group" >
+            <button class="btn btn-primary dropdown-toggle">
+                {{vm.selectedOrg}}<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li ng-repeat="org in vm.orgsWorksFor"
+                    ng-click="vm.loadPlacesForOrg(org)">
+                    <a>{{org.name}}</a>
+                </li>
+            </ul>
+        </div>
+        </div>
     </div>

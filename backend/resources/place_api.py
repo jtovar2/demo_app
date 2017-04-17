@@ -9,7 +9,7 @@ from google.appengine.ext import ndb
 from flask_restful import Resource
 
 
-class FormApi(Resource):
+class PlaceApi(Resource):
     def get(self, parent_id, id=None):
         if id is None or parent_id is None:
             print 'fails first one'
@@ -25,14 +25,14 @@ class FormApi(Resource):
             print 'authorized'
             abort(401)
 
-        form_key = ndb.Key('Organization', parent_id, 'Form', id)
-        form = form_key.get()
-        if form is None:
+        place_key = ndb.Key('Organization', parent_id, 'Place', id)
+        place = place_key.get()
+        if place is None:
             print 'fails thrid one'
             abort(401)
         print "WTTTTTFFFffffffffffffff"
-        print form.to_json()
-        return form.to_json()
+        print place.to_json()
+        return place.to_json()
 
     def put(self, parent_id, id=None):
         if id is None or parent_id is None:
@@ -44,19 +44,19 @@ class FormApi(Resource):
             # change to un auth
             abort(401)
 
-        form_key = ndb.Key('Organization', parent_id, 'Form', id)
+        place_key = ndb.Key('Organization', parent_id, 'Place', id)
 
-        form = form_key.get()
-        if form is None:
+        place = place_key.get()
+        if place is None:
             abort(401)
-        body  = request.get_json(force=True)
+        body = request.get_json(force=True)
         body['id'] = id
-        form = form.entity_from_dict(body, parent_key=ndb.Key('Organization', parent_id))
-        if form is False:
+        place = place.entity_from_dict(body, parent_key=ndb.Key('Organization', parent_id))
+        if place is False:
             abort(401)
         else:
-            form.put()
-            return form.to_json()
+            place.put()
+            return place.to_json()
 
     def post(self, parent_id):
         if parent_id is None:
@@ -68,15 +68,15 @@ class FormApi(Resource):
             abort(401)
         parent_key = ndb.Key('Organization', parent_id)
         body = request.get_json(force=True)
-        form = model.Form()
-        form = form.entity_from_dict(body, parent_key=parent_key)
-        if form is False:
+        place = model.Place()
+        place = place.entity_from_dict(body, parent_key=parent_key)
+        if place is False:
             abort(401)
         else:
-            form.put()
-            return form.to_json()
+            place.put()
+            return place.to_json()
 
-    def delete(self,parent_id, id=None):
+    def delete(self, parent_id, id=None):
         if id is None or parent_id is None:
             abort(401)
         id = int(id)
@@ -85,8 +85,8 @@ class FormApi(Resource):
         if client_id != parent_id:
             # change to un auth
             abort(401)
-        form_key = ndb.Key('Organization', parent_id, 'Form', id)
-        form = form_key.get()
-        print form
-        form_key.delete()
+        place_key = ndb.Key('Organization', parent_id, 'Place', id)
+        place = place_key.get()
+        print place
+        place_key.delete()
         return '', 200
