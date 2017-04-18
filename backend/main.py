@@ -26,6 +26,7 @@ from resources.place_api import PlaceApi
 from resources.form_relationships import FilledFormsByOrgApi, FormsByOrgApi, FilledFormByUserInOrgApi
 from resources.place_relationships import PlacesByOrgApi
 from resources.org_user_relationships import InviteUserToOrg, AddUserToOrg, GetAllWorkersForOrg, RemoveUserFromOrg, GetAllOrgsForWorker
+from resources.clockin_api import ClockInApi
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -88,6 +89,7 @@ api.add_resource(OrganizationApi, '/rest/org/<string:id>', '/rest/org')
 api.add_resource(FormApi, '/rest/form/<string:parent_id>/<string:id>', '/rest/form/<string:parent_id>')
 api.add_resource(PlaceApi, '/rest/place/<string:parent_id>/<string:id>', '/rest/place/<string:parent_id>')
 api.add_resource(FilledFormApi, '/rest/filledform/<string:parent_id>/<string:id>', '/rest/filledform/<string:parent_id>')
+api.add_resource(ClockInApi, '/rest/clockin/<string:user_id>', '/rest/clockin/<string:user_id>/<string:org_id>/<string:place_id>')
 api.add_resource(UserApi, '/rest/user/<string:id>', '/rest/user')
 api.add_resource(FilledFormsByOrgApi, '/rest/filledform/org/<string:id>')
 api.add_resource(FormsByOrgApi, '/rest/form/org/<string:id>')

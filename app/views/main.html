@@ -11,16 +11,26 @@
 
 
         <div ng-if="vm.getClientRole == 'user'">
-            <div class="btn-group" >
-            <button class="btn btn-primary dropdown-toggle">
-                {{vm.selectedOrg}}<span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li ng-repeat="org in vm.orgsWorksFor"
+            <div ng-hide="vm.isUserClockedIn">
+                <div class="btn-group" uib-dropdown dropdown-append-to-body>
+      <button id="btn-append-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>
+        {{vm.selectedOrg}}<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
+          <li ng-repeat="org in vm.orgsWorksFor"
                     ng-click="vm.loadPlacesForOrg(org)">
                     <a>{{org.name}}</a>
-                </li>
-            </ul>
+          </li>
+      </ul>
+    </div>
+
+
+
+
         </div>
+            <div ng-show="vm.isUserClockedIn">
+                <div uib-alert ng-class="'alert-' + 'danger'">{{vm.clockedMessage}}</div>
+                <button class="btn btn-large btn-success" ng-click="vm.cancelClockin()">Clock-out</button>
+            </div>
         </div>
     </div>

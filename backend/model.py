@@ -91,11 +91,15 @@ class Place(ndb.Model, Entity):
     def query_by_org(cls, org_key):
         return cls.query(ancestor=org_key)
 
+class ClockIn(ndb.Model, Entity):
+    time = ndb.DateTimeProperty(auto_now_add=True)
+    org = ndb.KeyProperty()
+    place = ndb.KeyProperty()
 
 class FilledForm(ndb.Model, Entity):
     data = ndb.JsonProperty()
     creator = ndb.KeyProperty()
-    created = ndb.DateProperty(auto_now_add=True)
+    created = ndb.DateTimeProperty(auto_now_add=True)
 
     @classmethod
     def query_by_org(cls, org_key):
@@ -103,6 +107,6 @@ class FilledForm(ndb.Model, Entity):
 
 class Blob(ndb.Model, Entity):
     blobstore_key = ndb.StringProperty()
-    created = ndb.DateProperty(auto_now_add=True)
+    created = ndb.DateTimeProperty(auto_now_add=True)
     creator = ndb.KeyProperty()
     photo_or_nah = ndb.BooleanProperty()
