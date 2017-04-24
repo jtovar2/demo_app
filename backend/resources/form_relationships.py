@@ -16,8 +16,23 @@ class FilledFormsByOrgApi(Resource):
         client_id = users.get_current_user().user_id()
         if client_id != id:
             abort(401)
-        org_key = ndb.Key('Organization', id)
-        return ndb_util.query_to_dict_list(FilledForm.query_by_org(org_key).fetch(FORMS_PER_PAGE))
+        org_key = ndb.Key('Organization', str(id))
+        filled_forms = ndb_util.query_to_dict_list(FilledForm.query_by_org(org_key))
+        for filled_form in filled_forms:
+            print filled_form
+            filled_form['creator'] = ndb.Key('User', str(filled_form['creator']))
+            print filled_form['creator']
+            filled_form['creator'] = filled_form['creator'].get()
+            print "yooo form tho"
+            print filled_form
+            filled_form['creator'] = filled_form['creator'].to_json()
+
+            print filled_form['place']
+            print 'omggg pls work'
+
+        response = {'filled_forms': filled_forms}
+        return response
+
 
 class FormsByOrgApi(Resource):
     def get(self, id):

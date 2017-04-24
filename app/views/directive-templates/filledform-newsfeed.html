@@ -1,0 +1,3 @@
+<div ng-repeat="filledform in filledForms">
+    <div> <a ui-sref="view_form({filled_form_id: filledform.key, org_id: orgId})">{{filledform.key}}</a>, {{filledform.data.form.form_name}} , {{filledform.place}} {{filledform.creator.first_name}} {{filledform.creator.last_name}}</div>
+</div>

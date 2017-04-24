@@ -9,39 +9,15 @@ var ViewCtrl = angularApp.controller('ViewCtrl', function ($scope, FormService, 
 	// read form with given id
 	console.log($stateParams)
 	var org_id = $stateParams.org_id;
-	var form_id = $stateParams.form_id;
-	OrganizationService.getOrg(org_id).then(function(data)
-	{
-	    console.log("WTFFF");
-	    console.log(data);
-	    $scope.inventory = data.inventory;
-	    $scope.loading_inventory = false;
-	    console.log($scope.inventory);
-
-	});
-	FormService.getForm(org_id, form_id).then(function(data) {
-	    var form = data.data;
-
-		$scope.form = form;
-		$scope.loading_form = false;
-	});
-
-    $scope.onFormSubmit = function(form, inventory)
+	var form_id = $stateParams.filled_form_id;
+	console.log('yooo oo o');
+    FilledFormService.getFilledForm(org_id, form_id).then(function(data)
     {
-        console.log(form);
-        console.log(inventory);
-        FilledFormService.postFilledForm(org_id, {"data": {'form': form, 'inventory': inventory}})
-        .then(function(data)
-        {
-            console.log(data);
-        })
-
-    }
-
-    $scope.onFormCancel = function()
-    {
-        console.log('form cancelled');
-    }
+        console.log(data);
+        $scope.form = data.data.form;
+        $scope.chosen_inventory = data.data.inventory;
+        console.log($scope.form);
+    })
 
 
 

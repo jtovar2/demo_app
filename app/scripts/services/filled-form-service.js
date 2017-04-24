@@ -8,7 +8,7 @@
                 getFilledForm: getFilledForm,
                 deleteFilledForm: deleteFilledForm,
                 postFilledForm: postFilledForm,
-                getFilledFormsByOrgApi: getFilledFormsByOrgApi
+                getFilledFormsByOrg: getFilledFormsByOrg
 
             };
 
@@ -47,7 +47,7 @@
                     .then(success, error)
             }
 
-            function getFilledFormsByOrgApi(org_id) {
+            function getFilledFormsByOrg(org_id) {
                 return $http.get(filled_form_by_org_api_path + '/' + org_id )
                     .then(success, error)
               }

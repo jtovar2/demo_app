@@ -9,7 +9,7 @@
 
         <p>{{vm.getClientRole}} , {{vm.getClientId}}, {{vm.email}}</p>
 
-
+        <!--  User stuff-->
         <div ng-if="vm.getClientRole == 'user'">
             <div ng-hide="vm.isUserClockedIn">
                 <div class="btn-group" uib-dropdown dropdown-append-to-body>
@@ -32,5 +32,12 @@
                 <div uib-alert ng-class="'alert-' + 'danger'">{{vm.clockedMessage}}</div>
                 <button class="btn btn-large btn-success" ng-click="vm.loadFormsForOrg()">Clock-out</button>
             </div>
+        </div>
+
+
+        <!--- Org stuff-->
+        <div ng-if="vm.getClientRole == 'organization'">
+            NewsFeed should be right here
+            <filled-form-newsfeed-directive ng-hide="vm.getClientRole == 'none'" org-id="vm.getClientId"></filled-form-newsfeed-directive>
         </div>
     </div>

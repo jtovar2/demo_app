@@ -13,14 +13,23 @@ class FilledFormApi(Resource):
     def get(self, parent_id, id=None):
         if id is None or parent_id is None:
             abort(401)
-        filled_form_key = ndb.Key("Organization", parent_id, "FilledForm", id)
+        id = int(id)
+        parent_id = str(parent_id)
+        org_key = ndb.Key('Organization', str(parent_id))
+        print org_key.get()
+        print type(id)
+        filled_form_key = ndb.Key("FilledForm", id, parent=ndb.Key('Organization', str(parent_id)))
+        print filled_form_key
         filled_form = filled_form_key.get()
+
         if filled_form is None:
+            print  "filled_form is None"
             abort(401)
         client_id = users.get_current_user().user_id()
         user_key = ndb.Key('User', client_id)
-        if parent_id != client_id or filled_form.creator != user_key:
+        if parent_id != client_id and filled_form.creator != user_key:
             #change to unauthorized
+            print  'unauth'
             abort(401)
         return filled_form.to_json()
     '''
@@ -61,7 +70,7 @@ class FilledFormApi(Resource):
             ##change to unauth
             abort(401)
 
-        filled_form = model.FilledForm()
+        filled_form = model.FilledForm(parent=parent_key)
         filled_form.data = body['data']
         filled_form.creator = body['creator']
         filled_form.place = clockin.place
@@ -79,6 +88,7 @@ class FilledFormApi(Resource):
         if parent_id is None or id is None:
             abort(401)
 
+        id = int(id)
         filled_form_key = ndb.Key('Organization', parent_id, 'FilledForm', id)
         filled_form = filled_form_key.get()
         if filled_form is None:

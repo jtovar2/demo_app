@@ -155,7 +155,7 @@ angularApp.controller('MainCtrl', function ($state, $scope, $location, AuthServi
       console.log(clockinfo.form);
       console.log('org id :' + clockinfo.org_id)
 
-      $state.go('view_form', {'org_id': clockinfo.org_id, 'form_id': clockinfo.form});
+      $state.go('fill_form', {'org_id': clockinfo.org_id, 'form_id': clockinfo.form});
 
       //vm.selectFormPopOut(clockinfo.org_id);
       //ClockInService.postClockIn(vm.getClientId, clockinfo.org_id, clockinfo.place.key);

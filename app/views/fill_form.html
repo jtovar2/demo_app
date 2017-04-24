@@ -1,4 +1,4 @@
-<form-directive form="form" inventory="inventory" on-form-submit="onFormSubmit" on-form-cancel="onFormCancel"></form-directive><hr>
+<div ng-hide="loading_inventory || loading_form"><form-directive form="form" inventory="inventory" on-form-submit="onFormSubmit" on-form-cancel="onFormCancel"></form-directive><hr></div>
 
  <!-- Single button -->
 
@@ -6,7 +6,9 @@
 <form class="simple-form" id="InventoryForm">
 	<!--TODO show selected inventory and have remove button validate form -->
 	<div ng-repeat="item in chosen_inventory">
-		{{item.name}} {{item.sku}} {{item.starting}} {{item.ending}}
+		{{item.name}} <label>Num1: <input type="number" ng-model="item.starting" value="0" required></label> <label>Numb2:
+		<input type="number" ng-model="item.ending" value="0" required></label>
+		<button type="button" class="close" aria-label="Remove" ng-click="removeItemFromIventoryForm($index)">remove</button>
 	</div>
 </form>
 
