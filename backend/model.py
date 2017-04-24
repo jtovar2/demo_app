@@ -21,6 +21,7 @@ class Entity(object):
         try:
             entity = cls(**valid_properties)
         except Exception as e:
+            print e
             return False
         return entity
 
@@ -99,7 +100,9 @@ class ClockIn(ndb.Model, Entity):
 class FilledForm(ndb.Model, Entity):
     data = ndb.JsonProperty()
     creator = ndb.KeyProperty()
-    created = ndb.DateTimeProperty(auto_now_add=True)
+    end = ndb.DateTimeProperty(auto_now_add=True)
+    place = ndb.KeyProperty()
+    start = ndb.DateTimeProperty()
 
     @classmethod
     def query_by_org(cls, org_key):

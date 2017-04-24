@@ -1,7 +1,7 @@
 (function () {
     angularApp
     /* @ngInject */
-        .factory('FilledFormanizationService', function ($q, $http) {
+        .factory('FilledFormService', function ($q, $http) {
             var services = {
                 // Get Calls
                 putFilledForm: putFilledForm,

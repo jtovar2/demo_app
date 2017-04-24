@@ -19,7 +19,7 @@ angularApp.controller('HeaderCtrl', function ($scope, $location, $window, AuthSe
 
             if(vm.getClientRole == vm.user_role)
             {
-                //ClockInService.getClockIn(vm.getClientId);
+                ClockInService.getClockIn(vm.getClientId);
             }
             if(vm.getClientRole == vm.none_role)
             {

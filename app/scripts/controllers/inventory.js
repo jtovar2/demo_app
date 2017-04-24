@@ -1,6 +1,6 @@
 'use strict';
 
-angularApp.controller('InventoryCtrl', function ($scope, OrganizationService, AuthService, $watch) {
+angularApp.controller('InventoryCtrl', function ($scope, OrganizationService, AuthService) {
 
     var vm = this;
 

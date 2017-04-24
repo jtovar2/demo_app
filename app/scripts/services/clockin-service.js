@@ -4,6 +4,7 @@
         .factory('ClockInService', function ($q, $http, $rootScope) {
             var services = {
                 // Get Calls
+                getOrg: getOrg,
                 isClockedIn: isClockedIn,
                 getClockIn: getClockIn,
                 deleteClockIn: deleteClockIn,
@@ -13,12 +14,16 @@
             var clockin_api_path = '/rest/clockin'
 
             var clockin_status = false;
+            var clocked_in_org = null;
 
             function success(data) {
 
                 if(data.status == 201)
                 {
                     clockin_status = true;
+                    clocked_in_org = data.data.org;
+
+
                 }
                 else if(data.status == 203)
                 {
@@ -38,6 +43,11 @@
                 console.log(error);
                 console.log("There was an error");
                 return $q.reject(error);
+            }
+
+            function getOrg()
+            {
+                return clocked_in_org;
             }
 
 

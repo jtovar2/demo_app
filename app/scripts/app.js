@@ -51,12 +51,13 @@ var angularApp = angular.module('angularjsFormBuilderApp', ['ui.bootstrap', '$st
             {
                 state: 'view_form',
                 config: {
-                    url: '/forms/:id/view',
+                    url: '/forms/:form_id/org/:org_id/view',
                     templateUrl: '/views/view.html',
                     controller: 'ViewCtrl',
                     title: 'Form',
                     params: {
-                        id: null
+                        form_id: null,
+                        org_id: null
                     }
                 }
             },

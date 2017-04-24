@@ -33,8 +33,8 @@ angularApp.directive('fieldDirective', function($http, $compile) {
     var linker = function(scope, element) {
         // GET template content from path
         var templateUrl = getTemplateUrl(scope.field);
-        $http.get(templateUrl).success(function(data) {
-            element.html(data);
+        $http.get(templateUrl).then(function(data) {
+            element.html(data.data);
             $compile(element.contents())(scope);
         });
     }

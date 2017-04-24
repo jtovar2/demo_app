@@ -176,3 +176,5 @@
 </div>
 
     <button ng-click="vm.saveForm()" class="btn">Save form</button>
+    <button ng-click="vm.previewOn()" class="btn">Preview</button>
+    <div uib-alert ng-show="vm.no_fields_alert.toggle" ng-class="'alert-' + vm.no_fields_alert.type" close="vm.closeFieldAlert()">{{vm.no_fields_alert.msg}}</div>

@@ -1,6 +1,6 @@
 'use strict';
 
-angularApp.controller('CreateCtrl', function ($scope, $dialog, $stateParams, FormService, AuthService, editableOptions) {
+angularApp.controller('CreateCtrl', function ($scope, $stateParams, FormService, AuthService, editableOptions) {
 
     console.log($stateParams);
     var vm = this;
@@ -15,6 +15,9 @@ angularApp.controller('CreateCtrl', function ($scope, $dialog, $stateParams, For
     vm.form.form_id = 1;
     vm.form.form_name = 'My Form';
     vm.form.form_fields = [];
+
+    //alert for no fields in form for preview
+    vm.no_fields_alert = {type: 'danger', msg: 'No fields in the forms.', toggle: false};
 
 
     if(vm.form_id != null)
@@ -106,18 +109,24 @@ angularApp.controller('CreateCtrl', function ($scope, $dialog, $stateParams, For
 
     // preview form
     vm.previewOn = function(){
+        console.log("on preview function");
         if(vm.form.form_fields == null || vm.form.form_fields.length == 0) {
-            var title = 'Error';
+            console.log('Error');
             var msg = 'No fields added yet, please add fields to the form before preview.';
             var btns = [{result:'ok', label: 'OK', cssClass: 'btn-primary'}];
 
-            $dialog.messageBox(title, msg, btns).open();
+            vm.no_fields_alert.toggle = true;
         }
         else {
+            console.log("now on preview mode");
             vm.previewMode = !vm.previewMode;
             vm.form.submitted = false;
             angular.copy(vm.form, vm.previewForm);
         }
+    }
+    // close no field alert
+    vm.closeFieldAlert = function(){
+        vm.no_fields_alert.toggle = false;
     }
 
     // hide preview form, go back to create mode

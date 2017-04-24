@@ -43,6 +43,8 @@ class OrganizationApi(Resource):
             abort(401)
         body = request.get_json(force=True)
         body['id'] = id
+        if body['workers'] > 0:
+            body['workers'] = self._generate_kind_keys(body['workers'], 'User')
         org = org.entity_from_dict(body)
         if org is False:
             print "third one"
@@ -74,3 +76,8 @@ class OrganizationApi(Resource):
         org_key = ndb.Key('Organization', id)
         org_key.delete()
         return '', 200
+    def _generate_kind_keys(self, ids, kind):
+        keys = []
+        for id in ids:
+            keys.append(ndb.Key(kind, id))
+        return keys

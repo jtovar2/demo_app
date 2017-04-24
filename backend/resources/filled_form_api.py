@@ -23,7 +23,7 @@ class FilledFormApi(Resource):
             #change to unauthorized
             abort(401)
         return filled_form.to_json()
-
+    '''
     def put(self, parent_id, id=None):
         if id is None or parent_id is None:
             abort(401)
@@ -40,7 +40,7 @@ class FilledFormApi(Resource):
             abort(401)
         else:
             filled_form.put()
-            return filled_form.to_json()
+            return filled_form.to_json()'''
 
     def post(self, parent_id):
         if parent_id is None:
@@ -51,18 +51,28 @@ class FilledFormApi(Resource):
 
         client_id = users.get_current_user().user_id()
         body['creator'] = ndb.Key('User', client_id)
+        clockin_key = ndb.Key('ClockIn', client_id)
+        clockin = clockin_key.get()
+        if clockin is None or clockin.org != parent_key:
+            print "problem with clockin"
+            abort(403)
         org = parent_key.get()
         if body['creator'] not in org.workers:
             ##change to unauth
             abort(401)
 
         filled_form = model.FilledForm()
+        filled_form.data = body['data']
+        filled_form.creator = body['creator']
+        filled_form.place = clockin.place
+        filled_form.start = clockin.time
         creator = body['creator'].get()
-        if creator is None or filled_form is False:
+        if creator is None:
             abort(401)
         else:
             filled_form_key = filled_form.put()
-            creator.add_filled_form(filled_form_key, parent_key=parent_key)
+            creator.add_filled_form(filled_form_key)
+            clockin_key.delete()
             return filled_form.to_json()
 
     def delete(self, parent_id, id=None):

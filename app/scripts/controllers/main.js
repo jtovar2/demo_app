@@ -1,6 +1,6 @@
 'use strict';
 
-angularApp.controller('MainCtrl', function ($scope, $location, AuthService, UserService, ClockInService, PlaceService, $uibModal, $document) {
+angularApp.controller('MainCtrl', function ($state, $scope, $location, AuthService, UserService, ClockInService, PlaceService, $uibModal, $document, FormService) {
 
     var vm = this;
     vm.getClientId = AuthService.getClientId();
@@ -8,6 +8,7 @@ angularApp.controller('MainCtrl', function ($scope, $location, AuthService, User
     vm.email = AuthService.getClientEmail();
     vm.isUserClockedIn = false;
     vm.orgPlaces = [];
+    vm.orgForms = [];
 
     vm.clockedMessage = "You are clocked in";
 
@@ -112,4 +113,55 @@ angularApp.controller('MainCtrl', function ($scope, $location, AuthService, User
         console.log('yoo yoo wtf');
         ClockInService.deleteClockIn(vm.getClientId);
     }
+
+
+    vm.loadFormsForOrg = function()
+    {
+        var org_id = ClockInService.getOrg();
+        console.log(org_id);
+        FormService.getFormsByOrg(org_id).then(function(data)
+        {
+            console.log(data)
+            vm.orgForms = data.forms;
+            vm.selectFormPopOut();
+        })
+    }
+    /////Stuff for form selector pop up
+    vm.selectFormPopOut = function (size, parentSelector) {
+    var org_id = ClockInService.getOrg();
+    var parentElem = parentSelector ?
+      angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
+    var modalInstance = $uibModal.open({
+      animation: true,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: '/views/popups/formPopup.html',
+      controller: 'FormPopupCtrl',
+      controllerAs: 'vm',
+      size: size,
+      appendTo: parentElem,
+      resolve: {
+        forms: function () {
+          return vm.orgForms;
+        },
+        org_id : function()
+        {
+            return org_id
+        }
+      }
+    });
+
+    modalInstance.result.then(function (clockinfo) {
+      console.log(clockinfo.form);
+      console.log('org id :' + clockinfo.org_id)
+
+      $state.go('view_form', {'org_id': clockinfo.org_id, 'form_id': clockinfo.form});
+
+      //vm.selectFormPopOut(clockinfo.org_id);
+      //ClockInService.postClockIn(vm.getClientId, clockinfo.org_id, clockinfo.place.key);
+
+    }, function () {
+      console.log('Modal dismissed at: ' + new Date());
+    });
+  };
 });
