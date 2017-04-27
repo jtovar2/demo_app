@@ -15,6 +15,7 @@ angularApp.controller('CreateCtrl', function ($scope, $stateParams, FormService,
     vm.form.form_id = 1;
     vm.form.form_name = 'My Form';
     vm.form.form_fields = [];
+    vm.form.field_last_added_id = 0;
 
     //alert for no fields in form for preview
     vm.no_fields_alert = {type: 'danger', msg: 'No fields in the forms.', toggle: false};
@@ -37,7 +38,6 @@ angularApp.controller('CreateCtrl', function ($scope, $stateParams, FormService,
     vm.addField = {};
     vm.addField.types = FormService.fields;
     vm.addField.new = vm.addField.types[0].name;
-    vm.addField.lastAddedID = 0;
 
     // accordion settings
     vm.accordion = {}
@@ -47,11 +47,12 @@ angularApp.controller('CreateCtrl', function ($scope, $stateParams, FormService,
     vm.addNewField = function(){
 
         // incr field_id counter
-        vm.addField.lastAddedID++;
+        vm.form.field_last_added_id++;
+
 
         var newField = {
-            "field_id" : vm.addField.lastAddedID,
-            "field_title" : "New field - " + (vm.addField.lastAddedID),
+            "field_id" : vm.form.field_last_added_id,
+            "field_title" : "New field - " + (vm.form.field_last_added_id),
             "field_type" : vm.addField.new,
             "field_value" : "",
             "field_required" : true,
@@ -146,7 +147,8 @@ angularApp.controller('CreateCtrl', function ($scope, $stateParams, FormService,
     // deletes all the fields
     vm.reset = function (){
         vm.form.form_fields.splice(0, vm.form.form_fields.length);
-        vm.addField.lastAddedID = 0;
+
+        vm.form.field_last_added_id = 0;
     }
 
     vm.saveForm = function()

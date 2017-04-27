@@ -109,7 +109,6 @@ class FilledForm(ndb.Model, Entity):
         return cls.query(ancestor=org_key).order(-cls.end)
 
 class Blob(ndb.Model, Entity):
-    blobstore_key = ndb.StringProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     creator = ndb.KeyProperty()
     photo_or_nah = ndb.BooleanProperty()

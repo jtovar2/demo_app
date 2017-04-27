@@ -5,7 +5,7 @@
         <div class="span2">Form ID:</div>
         <div class="span4">{{ form.form_id }}</div>
     </div>
-    <form name="myForm" id="myForm">
+    <form name="myForm" id="myForm"></form>
         <div ng-repeat="field in form.form_fields">
             <field-directive field="field">
 
@@ -21,19 +21,15 @@
 			  <li role="menuitem" ng-click="addItemToInventoryForm(item)" ng-show="chosen_inventory.indexOf(item) < 0"><a>{{item.name}}</a></li>
 		  </div>
 
-        <li role="menuitem"><a href="#">Another action</a></li>
-        <li role="menuitem"><a href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li role="menuitem"><a href="#">Separated link</a></li>
       </ul>
     </div>
         <div ng-repeat="item in chosen_inventory">
-		{{item.name}} <label>Num1: <input type="number" ng-model="item.starting" value="0" required></label> <label>Numb2:
-		<input type="number" ng-model="item.ending" value="0" required></label>
+		{{item.name}} <label>Num1: <input type="number" ng-model="item.starting" value="0" required form="myForm"></label> <label>Numb2:
+		<input type="number" ng-model="item.ending" value="0" required form="myForm"></label>
 		<button type="button" class="close" aria-label="Remove" ng-click="removeItemFromIventoryForm($index)">remove</button>
 	    </div>
 
-    </form>
+
 
 
 

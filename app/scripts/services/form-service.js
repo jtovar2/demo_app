@@ -9,6 +9,8 @@ angularApp.service('FormService', function FormService($q, $http) {
     
     
     function success(data) {
+        console.log(data);
+
         return $q.resolve(data.data);
         }
     function error(error) {
@@ -89,6 +91,10 @@ angularApp.service('FormService', function FormService($q, $http) {
             {
                 name : 'checkbox',
                 value : 'Checkbox'
+            },
+            {
+                name: 'photo',
+                value: 'Photo'
             }
         ],
         form:function (id) {

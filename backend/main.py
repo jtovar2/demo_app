@@ -27,13 +27,15 @@ from resources.form_relationships import FilledFormsByOrgApi, FormsByOrgApi, Fil
 from resources.place_relationships import PlacesByOrgApi
 from resources.org_user_relationships import InviteUserToOrg, AddUserToOrg, GetAllWorkersForOrg, RemoveUserFromOrg, GetAllOrgsForWorker
 from resources.clockin_api import ClockInApi
+from resources.blobstore_api import BlobstoreURLGen, PhotoApi, PhotoUploadHandler
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 app.debug = True
-#CORS(app)
+CORS(app)
 api = Api(app)
 
 clientId = '692772929154-2nasht9k1q88nm15mekm0s6evt1pjin2.apps.googleusercontent.com'
@@ -100,3 +102,6 @@ api.add_resource(AddUserToOrg, '/rest/org/add/worker/<string:org_id>/<string:use
 api.add_resource(GetAllWorkersForOrg, '/rest/org/workers/<string:org_id>')
 api.add_resource(RemoveUserFromOrg, '/rest/org/remove/worker/<string:org_id>/<string:user_id>')
 api.add_resource(GetAllOrgsForWorker, '/rest/user/orgs/<string:user_id>')
+api.add_resource(BlobstoreURLGen, '/rest/blobstore/url')
+api.add_resource(PhotoUploadHandler, '/rest/upload_photo')
+api.add_resource(PhotoApi, '/rest/photo/<string:blob_id>')

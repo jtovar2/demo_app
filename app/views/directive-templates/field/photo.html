@@ -1,0 +1,7 @@
+<div ng-hide="file_uploaded">
+{{field.field_title}} <input type="file" file-model="myFile"/>
+    <button ng-click="uploadFile()">upload me</button></div>
+
+<div ng-show="file_uploaded">
+    {{blob_key}} was uploaded <button ng-click="removeBlob()">remove</button>
+</div>
