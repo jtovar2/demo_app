@@ -1,7 +1,21 @@
-<div ng-hide="file_uploaded">
-{{field.field_title}} <input type="file" file-model="myFile"/>
-    <button ng-click="uploadFile()">upload me</button></div>
-
-<div ng-show="file_uploaded">
-    {{blob_key}} was uploaded <button ng-click="removeBlob()">remove</button>
+<div class="field row">
+    <div class="span2">{{field.field_title}}</div>
 </div>
+<div class="field row">
+    <div class="span4" ng-hide="file_uploaded">
+        <input type="file" file-model="myFile"/>
+    </div>
+    <div ng-hide="file_uploaded" class="span4">
+    <button ng-click="uploadFile()">upload me</button>
+    </div>
+    <div ng-show="file_uploaded" class="span4">
+    <button  ng-click="removeBlob()">remove</button>
+    </div>
+        <span class="required-error" ng-show="field.field_required && !field.field_value">* required</span>
+</div>
+
+<input type="text"
+			ng-model="field.field_value"
+			value="{{field.field_value}}"
+			ng-required="field.field_required"
+			ng-hide="true" form="myForm">

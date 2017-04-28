@@ -59,6 +59,7 @@ angularApp.directive('fieldDirective', function($http, $compile, $sce, $parse) {
             {
                 console.log(data);
                 $scope.blob_key = data.key;
+                $scope.field.field_value = $scope.blob_key;
                 $scope.file_uploaded = true;
             });
 
@@ -72,6 +73,7 @@ angularApp.directive('fieldDirective', function($http, $compile, $sce, $parse) {
                 console.log(data);
                 $scope.file_uploaded = false;
                 $scope.getUploadUrl();
+                $scope.field.field_value = "";
             })
         }
 
