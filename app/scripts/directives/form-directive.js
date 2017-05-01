@@ -23,7 +23,6 @@ angularApp.directive('formDirective', function () {
 	        }
 	    $scope.removeItemFromIventoryForm = function(index)
         	{
-            console.log(index);
                 $scope.chosen_inventory.splice(index, 1);
 	        }
 	        $scope.removeFileQuestion = function(form_question_index)

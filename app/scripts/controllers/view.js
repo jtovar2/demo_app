@@ -17,8 +17,5 @@ var ViewCtrl = angularApp.controller('ViewCtrl', function ($scope, FormService, 
         $scope.form = data.data.form;
         $scope.chosen_inventory = data.data.inventory;
         console.log($scope.form);
-    })
-
-
-
+    });
 });
