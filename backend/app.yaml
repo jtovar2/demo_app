@@ -5,5 +5,9 @@ threadsafe: true
 handlers:
 - url: /rest/.*
   script: main.app
+- url: /.*
+  static_dir: dist
+
+
 # TODO add routers for angular app and shit
 # TODO auth stuff

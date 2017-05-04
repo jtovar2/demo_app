@@ -1,0 +1,22 @@
+<h1>Inventory</h1>
+<hr>
+<p ng-show="vm.org.inventory == 0">There are no people in your team.</p>
+<div class="container">
+    <div ng-repeat="item in vm.org.inventory">
+        <div class="row">
+            <div class="span4"> <a input="text" editable-text="item.name" value="{{item.name}}" on-change="updateInv()">{{item.name}}</a></div>
+            <div class="span4"> <input input="text" editable-text="item.sku" value="{{item.sku}}" on-change="updateInv()"></div>
+            <div class="span2"> <button class="btn btn-danger pull-right" type="button" ng-click="vm.deleteItem(item.sku)"><i class="icon-trash icon-white"></i>Delete</button></div>
+
+        </div>
+        <br>
+    </div>
+
+    <form novalidate="" class="simple-form">
+    <div class="row">
+            <div class="span4"><label>Item Name: <input type="text" ng-model="vm.new_item.name"></label></div>
+            <div class="span4"><label>Item Sku: <input type="text" ng-model="vm.new_item.sku"></label></div>
+            <div class="span2"><input class="btn" type="submit" ng-click="vm.addItem()" value="Add New Item"></div>
+    </div>
+    </form>
+</div>

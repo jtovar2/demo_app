@@ -1,0 +1,41 @@
+<div class="jumbotron">
+        <h1>DemoDoc App</h1>
+        <p ng-if="vm.getClientRole == 'none'" class="lead">Create an account today!</p>
+        <button class="btn btn-large btn-success" ui-sref="sign_up" ng-if="vm.getClientRole == 'none'">Sign up</button>
+
+        <p ng-if="vm.getClientRole == 'error'" class="lead">Create an account today</p>
+        <a class="btn btn-large btn-success" ng-if="vm.getClientRole == 'error'">Sign in</a>
+
+        <p>{{vm.getClientRole}} , {{vm.getClientId}}, {{vm.email}}</p>
+
+        <!--  User stuff-->
+        <div ng-if="vm.getClientRole == 'user'">
+            <div ng-hide="vm.isUserClockedIn">
+                <div class="btn-group" uib-dropdown="" dropdown-append-to-body="">
+      <button id="btn-append-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle="">
+        {{vm.selectedOrg}}<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" uib-dropdown-menu="" role="menu" aria-labelledby="btn-append-to-body">
+          <li ng-repeat="org in vm.orgsWorksFor" ng-click="vm.loadPlacesForOrg(org)">
+                    <a>{{org.name}}</a>
+          </li>
+      </ul>
+    </div>
+
+
+
+
+        </div>
+            <div ng-show="vm.isUserClockedIn">
+                <div uib-alert="" ng-class="'alert-' + 'danger'">{{vm.clockedMessage}}</div>
+                <button class="btn btn-large btn-success" ng-click="vm.loadFormsForOrg()">Clock-out</button>
+            </div>
+        </div>
+
+
+        <!--- Org stuff-->
+        <div ng-if="vm.getClientRole == 'organization'">
+            NewsFeed should be right here
+            <filled-form-newsfeed-directive ng-hide="vm.getClientRole == 'none'" org-id="vm.getClientId"></filled-form-newsfeed-directive>
+        </div>
+    </div>
