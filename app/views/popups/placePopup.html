@@ -4,7 +4,7 @@
         <div class="modal-body" id="modal-body">
             <ul ng-if="vm.places.length > 0">
                 <li ng-repeat="place in vm.places">
-                    <a href="#" ng-click="vm.ok(place)">{{place.address.street_address}} {{place.address.city}} {{place.address.state}}</a>
+                    <a href="#" ng-click="vm.ok(place)">{{place.address.formatted_address}}</a>
                 </li>
             </ul>
             <div ng-if="vm.places.length == 0">Currently there are not any locations.</div>

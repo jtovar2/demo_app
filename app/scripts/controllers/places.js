@@ -1,6 +1,6 @@
 'use strict';
 
-angularApp.controller('PlacesCtrl', function ($scope, PlaceService, AuthService) {
+angularApp.controller('PlacesCtrl', function ($scope, PlaceService, AuthService, GeocodeService) {
     
 
     var vm = this;
@@ -43,11 +43,23 @@ angularApp.controller('PlacesCtrl', function ($scope, PlaceService, AuthService)
     };
 
 
-    vm.addPlace = function()
+    vm.addPlace = function(address)
     {
-        PlaceService.postPlace(vm.orgId, {"address": vm.new_place}).then(function(data)
+        PlaceService.postPlace(vm.orgId, {"address": address}).then(function(data)
         {
             vm.updateUi();
         })
+    }
+
+    vm.lookUpAddress = function(address)
+    {
+        if(address.length > 7)
+        {
+        GeocodeService.lookUpAddress(address).then(function(data)
+        {
+            console.log(data);
+            vm.resultAddresses = data.results;
+        })
+        }
     }
     });

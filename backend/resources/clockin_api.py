@@ -33,11 +33,29 @@ class ClockInApi(Resource):
         clockin_key = ndb.Key("ClockIn", user_id)
         client_id = users.get_current_user().user_id()
         org_key = ndb.Key("Organization", org_id)
-        place_key = ndb.Key("Place", place_id)
+
+        place_id = int(place_id)
+        place_key = ndb.Key('Organization', org_id, "Place", place_id)
+
+
+        place = place_key.get()
+        if place is None:
+            #place is none??
+            abort(401)
+
+        place_lat = place.address['geometry']['location']['lat']
+        place_lng = place.address['geometry']['location']['lng']
+        formatted_address = place.address['formatted_address']
+
+        print "diis the lat and lng: " + str(place_lat) + ' ' + str(place_lng)
+        print formatted_address
         if client_id != user_id or org_key not in user.works_for_organizations:
             # change to unauthorized
             abort(401)
-        clockIn = ClockIn(place=place_key, org=org_key, id=user_id)
+        clockIn = ClockIn(place=place_key, org=org_key, id=user_id,
+                          formatted_address=formatted_address,
+                          address_lat_long=ndb.GeoPt(place_lat, place_lng))
+
         clockIn.put()
         return clockIn.to_json(), 201
 
