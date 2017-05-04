@@ -31,25 +31,25 @@ angularApp.controller('MainCtrl', function ($state, $scope, $location, AuthServi
     //User related stuff
     vm.selectedOrg = 'Please select org';
     vm.orgsWorksFor = [];
+    vm.placesByOrg = {};
+    vm.formsByOrg = {};
     vm.getUserData = function()
     {
-        UserService.getOrgsUserWorksFor(vm.getClientId).then(function(data)
+        UserService.getFrontPage(vm.getClientId).then(function(data)
         {
-            console.log(data);
+
             vm.orgsWorksFor = data.organizations;
-        });
+            vm.placesByOrg = data.places;
+            vm.formsByOrg = data.forms;
+        })
 
         vm.isUserClockedIn = ClockInService.isClockedIn();
     }
     vm.loadPlacesForOrg = function(org)
     {
-        console.log(org.key);
         vm.selectedOrg = org.name;
-        PlaceService.getPlacesByOrg(org.key).then(function(data)
-        {
-            vm.orgPlaces = data.places;
-            vm.selectPlaceForClockIn(org.key)
-        })
+        vm.orgPlaces = vm.placesByOrg[org.key];
+        vm.selectPlaceForClockIn(org.key);
     }
 
     vm.cancelClockin = function()
@@ -77,7 +77,7 @@ angularApp.controller('MainCtrl', function ($state, $scope, $location, AuthServi
 
     /////Stuff for clock in pop up
     vm.selectPlaceForClockIn = function (org_id, size, parentSelector) {
-    console.log(org_id);
+
     var parentElem = parentSelector ?
       angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
     var modalInstance = $uibModal.open({
@@ -101,11 +101,9 @@ angularApp.controller('MainCtrl', function ($state, $scope, $location, AuthServi
     });
 
     modalInstance.result.then(function (clockinfo) {
-      console.log(clockinfo.place);
-      console.log('org id :' + clockinfo.org_id)
       ClockInService.postClockIn(vm.getClientId, clockinfo.org_id, clockinfo.place.key);
     }, function () {
-      console.log('Modal dismissed at: ' + new Date());
+      console.log('on cancel');
     });
   };
     vm.cancelClockin = function()
@@ -118,13 +116,8 @@ angularApp.controller('MainCtrl', function ($state, $scope, $location, AuthServi
     vm.loadFormsForOrg = function()
     {
         var org_id = ClockInService.getOrg();
-        console.log(org_id);
-        FormService.getFormsByOrg(org_id).then(function(data)
-        {
-            console.log(data)
-            vm.orgForms = data.forms;
-            vm.selectFormPopOut();
-        })
+        vm.orgForms = vm.formsByOrg[org_id];
+        vm.selectFormPopOut();
     }
     /////Stuff for form selector pop up
     vm.selectFormPopOut = function (size, parentSelector) {
@@ -152,8 +145,6 @@ angularApp.controller('MainCtrl', function ($state, $scope, $location, AuthServi
     });
 
     modalInstance.result.then(function (clockinfo) {
-      console.log(clockinfo.form);
-      console.log('org id :' + clockinfo.org_id)
 
       $state.go('fill_form', {'org_id': clockinfo.org_id, 'form_id': clockinfo.form});
 

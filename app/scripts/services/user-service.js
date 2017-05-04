@@ -8,12 +8,14 @@
                 getUser: getUser,
                 deleteUser: deleteUser,
                 postUser: postUser,
-                getOrgsUserWorksFor : getOrgsUserWorksFor
+                getOrgsUserWorksFor : getOrgsUserWorksFor,
+                getFrontPage: getFrontPage
 
             };
 
             var user_api_path = '/rest/user';
             var user_works_for_path = '/rest/user/orgs';
+            var user_front_page_api = '/rest/user/front_page';
             function success(data) {
                 return $q.resolve(data.data);
             }
@@ -24,6 +26,10 @@
                 return $q.reject(error);
             }
 
+            function getFrontPage(user_id) {
+                return $http.get(user_front_page_api + '/' + user_id)
+                    .then(success, error)
+            }
 
             function getUser(user_id) {
                 return $http.get(user_api_path + '/' + user_id)

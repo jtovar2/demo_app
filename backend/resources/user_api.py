@@ -85,7 +85,7 @@ class UserFrontPageApi(Resource):
             response_org = {}
             response_org['name'] = org.name
             response_org['inventory'] = org.inventory
-            response_org['id'] = org_key.id()
+            response_org['key'] = org_key.id()
             response_org['kind'] = 'Organization'
             query = model.Form.query_by_org(org_key)
             forms[org_key.id()] = ndb_util.query_to_dict_list(query)
