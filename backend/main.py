@@ -21,7 +21,7 @@ from flask_restful import Api
 from resources.org_api import OrganizationApi
 from resources.form_api import FormApi
 from resources.filled_form_api import FilledFormApi
-from resources.user_api import UserApi
+from resources.user_api import UserApi, UserFrontPageApi
 from resources.place_api import PlaceApi
 from resources.form_relationships import FilledFormsByOrgApi, FormsByOrgApi, FilledFormByUserInOrgApi
 from resources.place_relationships import PlacesByOrgApi
@@ -105,3 +105,4 @@ api.add_resource(GetAllOrgsForWorker, '/rest/user/orgs/<string:user_id>')
 api.add_resource(BlobstoreURLGen, '/rest/blobstore/url')
 api.add_resource(PhotoUploadHandler, '/rest/upload_photo')
 api.add_resource(PhotoApi, '/rest/photo/<string:blob_id>')
+api.add_resource(UserFrontPageApi, '/rest/user/front_page/<string:id>')
