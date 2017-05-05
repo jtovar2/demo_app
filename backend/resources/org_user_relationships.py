@@ -38,9 +38,7 @@ class InviteUserToOrg(Resource):
 
         org_key = ndb.Key('Organization', org_id)
         org = org_key.get()
-        sender = 'demolisherapp@demolisherapp.appspot.com'
-        ender = '{}@appspot.gserviceaccount.com'.format(
-            app_identity.get_application_id())
+        sender = 'demolisher_team@demolisherapp.appspotmail.com'
         subject = 'Welcome to the ' + org.name +  ' Team!'
 
         body = '<h3>{org_name} has invited you to join their team</h3>' \

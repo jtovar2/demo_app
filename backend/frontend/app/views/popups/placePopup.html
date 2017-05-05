@@ -1,0 +1,14 @@
+<div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Select a location</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <ul ng-if="vm.places.length > 0">
+                <li ng-repeat="place in vm.places">
+                    <a href="#" ng-click="vm.ok(place)">{{place.address.formatted_address}}</a>
+                </li>
+            </ul>
+            <div ng-if="vm.places.length == 0">Currently there are not any locations.</div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+        </div>

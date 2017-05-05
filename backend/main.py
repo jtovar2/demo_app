@@ -45,8 +45,6 @@ client_secret = 'ayrXnhy-BmSXafYo-5Iei93I'
 def hello():
     return 'Hello World!'
 
-
-
 @app.route('/rest/auth2')
 def auth_test():
     user = users.get_current_user()

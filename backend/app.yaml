@@ -2,12 +2,17 @@ runtime: python27
 api_version: 1
 threadsafe: true
 
+
 handlers:
 - url: /rest/.*
   script: main.app
-- url: /.*
-  static_dir: dist
+- url: /
+  static_files: frontend/app/index.html
+  upload: index.html
 
 
+
+- url: /
+  static_dir: frontend/app/
 # TODO add routers for angular app and shit
 # TODO auth stuff

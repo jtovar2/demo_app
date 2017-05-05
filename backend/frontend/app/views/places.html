@@ -1,0 +1,27 @@
+<h1>Places</h1>
+<hr>
+<p ng-show="vm.places.length == 0">No places found.</p>
+<div class="container">
+    <div ng-repeat="place in vm.places">
+        <div class="row">
+            <div class="span6">{{place.address.formatted_address}}</div>
+            <div class="span2"> <button class="btn btn-danger pull-right" type="button" ng-click="vm.deletePlace(place.key)"><i class="icon-trash icon-white"></i>Delete</button></div>
+        </div>
+        <br>
+    </div>
+
+    <div class="row">
+        <div class="span6">
+    <label>Enter Address: <input type="text" ng-model="vm.textBoxAddress" ng-change="vm.lookUpAddress(vm.textBoxAddress)"/></label>
+        </div>
+    </div>
+
+    <div ng-hide="vm.textBoxAddress == ''" ng-repeat="address in vm.resultAddresses">
+        <div class="span6">{{address.formatted_address}}</div>
+         <div class="span2"> <button class="btn" type="button" ng-click="vm.addPlace(address)"><i class="icon-trash icon-white"></i>Add</button></div>
+        </div>
+        <br>
+
+    </div>
+</form>
+</div>
