@@ -96,6 +96,11 @@ class ClockIn(ndb.Model, Entity):
     time = ndb.DateTimeProperty(auto_now_add=True)
     org = ndb.KeyProperty()
     place = ndb.KeyProperty()
+    formatted_address = ndb.StringProperty()
+    address_lat_long = ndb.GeoPtProperty()
+    user_lat_long = ndb.GeoPtProperty()
+
+
 
 class FilledForm(ndb.Model, Entity):
     data = ndb.JsonProperty()
@@ -103,6 +108,9 @@ class FilledForm(ndb.Model, Entity):
     end = ndb.DateTimeProperty(auto_now_add=True)
     place = ndb.KeyProperty()
     start = ndb.DateTimeProperty()
+    formatted_address = ndb.StringProperty()
+    address_lat_long = ndb.GeoPtProperty()
+    start_user_lat_long = ndb.GeoPtProperty()
 
     @classmethod
     def query_by_org(cls, org_key):

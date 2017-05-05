@@ -70,11 +70,16 @@ class FilledFormApi(Resource):
             ##change to unauth
             abort(401)
 
+
         filled_form = model.FilledForm(parent=parent_key)
         filled_form.data = body['data']
         filled_form.creator = body['creator']
         filled_form.place = clockin.place
         filled_form.start = clockin.time
+        filled_form.formatted_address = clockin.formatted_address
+        filled_form.address_lat_long = clockin.address_lat_long
+        filled_form.start_user_lat_long  = clockin.user_lat_long
+
         creator = body['creator'].get()
         if creator is None:
             abort(401)

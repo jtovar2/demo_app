@@ -1,0 +1,21 @@
+
+<div ng-if="vm.clientRole == vm.none_role">
+    <uib-tabset active="pills">
+    <uib-tab index="0" heading="User">
+        <form novalidate class="simple-form">
+            <label>Last Name: <input type="text" ng-model="vm.user.first_name" /></label><br />
+            <label>First Name: <input type="text" ng-model="vm.user.last_name" /></label><br />
+            E-mail: {{vm.user.email}}<br />
+            <button ng-click="vm.createUser()">Create User</button>
+        </form>
+    </uib-tab>
+        <uib-tab index="1" heading="Company">
+            <form novalidate class="simple-form">
+                <label>Name: <input type="text" ng-model="vm.org.name" /></label><br />
+                E-mail: {{vm.org.email}}<br />
+                <button ng-click="vm.createOrg()">Create</button>
+
+            </form>
+        </uib-tab>
+    </uib-tabset>
+</div>

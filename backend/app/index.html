@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>DemoDoc</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+      <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="692772929154-2nasht9k1q88nm15mekm0s6evt1pjin2.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+      <base href="/">
+    <!-- build:css({.tmp,app}) styles/main.css -->
+	<link rel="stylesheet" href="styles/main.css">
+      <link rel="stylesheet" href="bower_components/toastr/toastr.css">
+	<link rel="stylesheet" href="styles/bootstrap-2.3.2.min.css">
+
+	<!-- endbuild -->
+      <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+
+  </head>
+  <body ng-app="angularjsFormBuilderApp">
+        <div class="container-narrow">
+            <div class="masthead" ng-controller="HeaderCtrl as vm" >
+                <ul class="nav nav-pills pull-right">
+                    <li><a ui-sref="home">Home</a></li>
+                    <li><a ng-show="vm.getClientRole == vm.org_role" ui-sref="forms">Forms</a></li>
+                    <li><a ng-show="vm.getClientRole == vm.org_role" ui-sref="inventory">Inventory</a></li>
+                    <li><a ng-show="vm.getClientRole == vm.org_role" ui-sref="team">Team</a></li>
+                    <li><a ng-show="vm.getClientRole == vm.org_role" ui-sref="places">Places</a></li>
+
+                </ul>
+                <img src="img/DemoDoc.png" alt="Mountain View" style="width:100px;height:230px;">
+            </div>
+
+            <hr>
+            <div ui-view></div>
+
+            <hr>
+            <div class="footer">
+                <p>Selman K. 2014 - <a href="https://github.com/Selmanh/angularjs-form-builder">angularjs-form-builder</a> </p>
+            </div>
+        </div>
+
+        <!-- build:js scripts/plugins.js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+        <script src="bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <!-- endbuild -->
+
+
+
+
+        <!-- build:js scripts/modules.js -->
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-ui/build/angular-ui.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-toastr/dist/angular-toastr.js"></script>
+        <script src="bower_components/toastr/toastr.js"></script>
+
+
+
+
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/create.js"></script>
+
+        <script src="scripts/controllers/view.js"></script>
+        <script src="scripts/controllers/fill-form.js"></script>
+        <script src="scripts/controllers/header.js"></script>
+        <script src="scripts/controllers/forms.js"></script>
+        <script src="scripts/controllers/places.js"></script>
+        <script src="scripts/controllers/inventory.js"></script>
+        <script src="scripts/controllers/signup.js"></script>
+        <script src="scripts/controllers/team.js"></script>
+        <script src="scripts/services/form-service.js"></script>
+        <script src="scripts/services/route-helper.provider.js"></script>
+        <script src="scripts/providers/logger-provider.js"></script>
+        <script src="scripts/popups/place-popup.js"></script>
+        <script src="scripts/popups/form-popup.js"></script>
+        <script src="scripts/services/filled-form-service.js"></script>
+        <script src="scripts/services/organization-service.js"></script>
+        <script src="scripts/services/clockin-service.js"></script>
+        <script src="scripts/services/file-upload-service.js"></script>
+        <script src="scripts/services/user-service.js"></script>
+        <script src="scripts/services/auth-service.js"></script>
+        <script src="scripts/services/place-service.js"></script>
+        <script src="scripts/directives/form-directive.js"></script>
+        <script src="scripts/directives/field-directive.js"></script>
+        <script src="scripts/directives/file-model-directive.js"></script>
+        <script src="scripts/directives/filled-form-newsfeed-directive.js"></script>
+        <script src="lib/ui-bootstrap-tpls-0.4.0.min.js"></script>
+
+
+
+        <!-- endbuild -->
+
+        <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+        <script src="bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+  </body>
+</html>
