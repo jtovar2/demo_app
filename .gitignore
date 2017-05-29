@@ -2,3 +2,4 @@ lib
 node_modules
 app/bower_components
 backend/virtual_env
+*.pyc
