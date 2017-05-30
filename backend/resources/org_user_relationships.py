@@ -13,7 +13,7 @@ from flask_restful import Resource
 from google.appengine.runtime import apiproxy_errors
 
 
-base_url = 'http://localhost:9000/#!/'
+base_url = 'http://demolisherapp.appspot.com/'
 app_name = 'DemolisherApp'
 new_user_message = '<p> Create a new account at {app_name} today</p>' \
                    '<form action="{path}" method="get">'\
