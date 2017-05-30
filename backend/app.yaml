@@ -5,5 +5,35 @@ threadsafe: true
 handlers:
 - url: /rest/.*
   script: main.app
+
+#Routes for angular stuff
+- url: /
+  static_files: dist/index.html
+  upload: index.html
+
+- url: /signup
+  static_files: dist/index.html
+  upload: index.html
+
+- url: /forms
+  static_files: dist/index.html
+  upload: index.html
+
+- url: /inventory
+  static_files: dist/index.html
+  upload: index.html
+
+- url: /team
+  static_files: dist/index.html
+  upload: index.html
+
+- url: /places
+  static_files: dist/index.html
+  upload: index.html
+
+
+
+- url: /
+  static_dir: dist/
+
 # TODO add routers for angular app and shit
-# TODO auth stuff
